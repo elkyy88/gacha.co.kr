@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>환불 문의 — 미디어캡슐</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+/* 레이아웃: 토피코 환불 문의와 같은 흐름 — 안내 팝업 → 제목 → 유의사항 → 입력 카드 → 환불 안내.
+   색은 미디어캡슐 로고의 남색(#1B2A4A)·주황(#FF6B35)·흰색으로 통일. */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --fg:#1B2A4A; --muted:#5C6678; --line:#DFE4EC;
+  --brand:#1B2A4A; --brand-ink:#1B2A4A; --brand-soft:#E8ECF4; --brand-mid:#FF6B35; --brand-light:#CBD3E1;
+  --accent:#FF6B35; --accent-deep:#E4551F; --accent-soft:#FFEDE4; --accent-line:#FFD8C6; --on-accent:#FFFFFF; --warn-bg:#FFEDE4; --warn-ink:#B8431A;
+  --cap-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231B2A4A'/%3E%3Cpath d='M7 32a25 25 0 0 1 50 0z' fill='%23FFFFFF'/%3E%3Cpath d='M7 32a25 25 0 0 0 50 0z' fill='%23FF6B35'/%3E%3Crect x='7' y='29.5' width='50' height='5' fill='%231B2A4A'/%3E%3C/svg%3E");
+  --font-display:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-logo:"Montserrat","Noto Sans KR",Arial,sans-serif;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* 다크 모드와 상관없이 항상 밝은 색으로 고정 */
+
+*{box-sizing:border-box}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1100px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.25;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+.note{font-size:13px;color:var(--muted)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--font-body);font-size:15px;line-height:1.2}
+.btn-brand{background:var(--brand);color:#FFFFFF;border-color:var(--brand)}
+.btn-brand:hover{filter:brightness(1.12)}
+.btn-outline{background:var(--surface);color:var(--brand-ink);border-color:var(--brand-light)}
+/* 캡슐 그림 (로고 모티프) */
+.cap-ico{width:40px;height:40px;display:block;flex:none}
+.cap-ico.sm{width:18px;height:18px}
+.cap-ico.navy{--cap-bottom:#1B2A4A}
+.cap-ico.flip{--cap-top:#FF6B35;--cap-bottom:#FFFFFF}
+.cap{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+  .cap{animation:float 6s ease-in-out infinite}
+  .cap:nth-child(2){animation-delay:-1.5s}.cap:nth-child(3){animation-delay:-3s}.cap:nth-child(4){animation-delay:-4.5s}.cap:nth-child(5){animation-delay:-2.2s}.cap:nth-child(6){animation-delay:-0.8s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+}
+.btn-outline:hover{background:var(--brand-soft)}
+
+/* 헤더 */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;position:relative}
+.logo{display:block;line-height:0}
+.logo img{height:54px;width:auto;display:block}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px}
+.nav a{display:block;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;color:var(--brand-ink)}
+.nav a:hover,.nav a:focus-visible,.nav a[aria-current="page"]{background:var(--brand-soft);color:var(--brand-ink)}
+.nav .cta a{background:var(--brand);color:#FFFFFF;font-weight:700}
+.nav li.cta+li.cta{margin-left:4px}
+.nav .cta a:hover{background:var(--brand);filter:brightness(1.12)}
+.menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line);background:var(--surface);border-radius:12px;color:var(--fg);cursor:pointer;align-items:center;justify-content:center}
+.menu-btn svg{width:22px;height:22px;display:block}
+@media (max-width:860px){
+  .site-header{position:static}
+  .site-header .wrap{flex-wrap:wrap;padding-block:10px 12px;gap:10px}
+  .logo img{height:42px}
+  .menu-btn{display:none}
+  .nav{width:100%}
+  .nav ul{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  .nav li{grid-column:span 2}
+  .nav li:nth-child(n+4){grid-column:span 3}
+  .nav a{text-align:center;padding:9px 4px;font-size:14px;font-weight:600;background:var(--brand-soft);color:var(--brand-ink);white-space:nowrap}
+  .nav a[aria-current="page"]{box-shadow:0 0 0 2px var(--brand-ink) inset}
+  .nav .cta a{background:var(--brand);color:#FFFFFF}
+}
+
+/* 페이지 머리 */
+.page-head{text-align:center;padding-block:48px 8px;display:grid;gap:12px;justify-items:center}
+.page-head h1{font-size:clamp(32px,4.6vw,48px)}
+.page-head p{color:var(--muted);font-size:16px}
+.page-head p b{display:block;color:var(--brand-ink);font-weight:700}
+.page-head .caps{width:150px;height:auto;display:block}
+
+/* 공통 카드 */
+.col{max-width:640px;margin-inline:auto;display:grid;gap:20px;padding-block:24px 64px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px}
+.panel h2{font-size:18px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.panel h2 svg{width:20px;height:20px;flex:none}
+.panel ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px;color:var(--muted)}
+.panel li{padding-left:14px;position:relative}
+.panel li::before{content:"•";position:absolute;left:0;color:var(--brand-mid)}
+.panel.soft{background:var(--brand-soft);border-color:var(--brand-light)}
+.panel.soft li{color:var(--fg)}
+
+/* 양식 */
+.form{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 24px;display:grid;gap:22px}
+.field{display:grid;gap:8px}
+.field>label,.field>.lbl{font-weight:700;font-size:15px}
+.req{color:#E8352B;margin-left:2px}
+.hint{font-size:13px;color:var(--muted)}
+.control{width:100%;min-width:0;max-width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;color:var(--fg);background:var(--surface)}
+.col>*,.field,.form{min-width:0}
+.control::placeholder{color:#A4A8C2}
+.control:focus{border-color:var(--brand-mid);outline:none;box-shadow:0 0 0 3px var(--brand-soft)}
+select.control{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B2A4A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:18px;padding-right:40px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg)}
+.seg label{position:relative;display:block}
+.seg input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.seg span{display:block;text-align:center;padding:11px 10px;font-size:14px;font-weight:500;color:var(--muted);border-radius:10px;margin:3px}
+.seg input:checked+span{background:var(--surface);color:var(--brand-ink);font-weight:700;box-shadow:0 0 0 1.5px var(--brand-mid) inset}
+.seg input:focus-visible+span{outline:3px solid var(--accent);outline-offset:-3px}
+.check{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--brand);margin:0}
+.callout{background:var(--brand-soft);border:1px solid var(--brand-light);border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.6}
+.callout b{color:var(--brand-ink)}
+.callout .em{color:var(--brand-ink);font-weight:700;display:block;margin-top:4px}
+.radio-list{display:grid;gap:8px}
+.radio{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:14px;cursor:pointer;background:var(--surface)}
+.radio input{width:18px;height:18px;accent-color:var(--brand);margin:0}
+.radio:has(input:checked){border-color:var(--brand-mid);background:var(--accent-soft);font-weight:700;color:var(--brand-ink)}
+.help{background:#F3F5F9;border:1px solid var(--brand-light);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--brand-ink);display:grid;gap:4px}
+.help b{display:flex;align-items:center;gap:6px}
+.help b svg{width:16px;height:16px}
+.help span{color:var(--fg)}
+.agree{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:18px}
+.agree .row2{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted);padding-left:28px}
+.agree .row2 a{color:var(--brand-ink);font-weight:600;padding:6px 10px;margin:-6px -10px;border-radius:8px}
+.badge{display:inline-block;font-size:11px;font-weight:700;color:var(--brand-ink);background:var(--brand-soft);border-radius:6px;padding:2px 6px;margin-right:4px}
+.submit{width:100%;padding:15px 22px;font-size:17px;border-radius:14px}
+.err{display:none;color:#C62828;font-size:13px}
+.form.show-errors .err{display:block}
+.done{display:none;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:36px 24px;text-align:center}
+.done h2{font-size:24px;margin-bottom:8px}
+.done p{color:var(--muted);font-size:15px}
+.done svg{width:64px;height:64px;margin:0 auto 12px;display:block}
+
+/* 팝업 */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(27,42,74,.6);display:grid;place-items:center;padding:16px}
+.modal-box{background:var(--surface);border-radius:22px;width:min(420px,100%);max-height:calc(100% - 16px);overflow:auto;position:relative;box-shadow:0 20px 60px rgba(27,42,74,.3)}
+.modal-box .art{background:var(--brand-soft);padding:20px 24px 0}
+.modal-box .art svg{width:100%;height:auto;display:block;max-width:300px;margin-inline:auto}
+.modal-box .body{padding:22px 24px 20px;display:grid;gap:10px;text-align:center}
+.modal-box h2{font-size:24px}
+.modal-box p{color:var(--muted);font-size:14px}
+.modal-box p b{color:var(--fg);display:block;margin-top:4px}
+.modal-list{margin:0;padding:0 0 0 22px;text-align:left;display:grid;gap:6px;font-size:14px;color:var(--fg)}
+.modal-list li{padding-left:4px}
+.modal-box .warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:700}
+.modal-box .submit{margin-top:4px}
+.modal-box .close{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;background:rgba(255,255,255,.85);border-radius:50%;cursor:pointer;color:var(--fg);display:grid;place-items:center}
+.modal-box .close svg{width:18px;height:18px}
+.modal-box .check{justify-content:center;color:var(--muted);font-size:13px}
+
+/* 푸터 */
+.site-footer{background:var(--brand);color:#FFFFFF;padding-block:48px 56px;overflow:hidden}
+.site-footer .wrap{display:grid;gap:22px;position:relative}
+.site-footer .logo{background:#FFFFFF;padding:8px 14px;border-radius:14px;width:max-content;max-width:100%}
+.site-footer .logo img{height:46px}
+.site-footer .deco{position:absolute;right:0;top:-6px;width:150px;height:auto}
+@media (max-width:860px){ .site-footer .deco{width:84px;top:4px} }
+.site-footer .info{display:grid;gap:4px;font-size:13px;opacity:.88;max-width:70ch}
+.site-footer .info span{display:inline-block}
+.site-footer .info .sep{opacity:.45;margin:0 8px}
+.site-footer .links{display:flex;flex-wrap:wrap;gap:16px;font-size:13px}
+.site-footer .links a{text-decoration:none;opacity:.85;display:inline-block;padding:6px 0}
+.site-footer .links a:hover{opacity:1;text-decoration:underline}
+.site-footer .copy{font-size:12px;letter-spacing:.06em;opacity:.7;font-family:var(--font-logo);font-weight:800}
+@media (max-width:640px){ .site-footer .info span{display:block} .site-footer .info .sep{display:none} .site-footer .info{gap:8px} }
+
+/* 안내 토스트 */
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:#FFFFFF;padding:12px 18px;border-radius:999px;font-size:14px;z-index:60;max-width:calc(100% - 32px);text-align:center}
+</style>
+</head>
+<body>
+
+<!-- 캡슐·머신 그림 (로고와 같은 남색·주황) — 페이지 곳곳에서 <use href="#cap"> 로 재사용 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="cap" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="var(--cap-ink,#1B2A4A)"/>
+      <path d="M7 32a25 25 0 0 1 50 0z" fill="var(--cap-top,#FFFFFF)"/>
+      <path d="M7 32a25 25 0 0 0 50 0z" fill="var(--cap-bottom,#FF6B35)"/>
+      <rect x="7" y="29.5" width="50" height="5" fill="var(--cap-ink,#1B2A4A)"/>
+    </symbol>
+    <symbol id="machine" viewBox="0 0 320 480">
+      <circle cx="160" cy="150" r="132" fill="var(--mc-glass,#FFFFFF)" stroke="var(--mc-ink,#1B2A4A)" stroke-width="16"/>
+      <ellipse cx="96" cy="74" rx="15" ry="30" transform="rotate(-35 96 74)" fill="var(--mc-hl,#E8ECF4)"/>
+      <use href="#cap" x="122" y="86" width="62" height="62"/>
+      <use href="#cap" x="182" y="122" width="58" height="58"/>
+      <use href="#cap" x="78" y="140" width="62" height="62"/>
+      <use href="#cap" x="140" y="178" width="62" height="62"/>
+      <rect x="16" y="270" width="288" height="38" rx="15" fill="var(--mc-ink,#1B2A4A)"/>
+      <rect x="40" y="304" width="240" height="166" rx="30" fill="var(--mc-ink,#1B2A4A)"/>
+      <rect x="58" y="320" width="204" height="132" rx="20" fill="var(--mc-body,#FF6B35)"/>
+      <circle cx="160" cy="368" r="40" fill="#FFFFFF"/>
+      <use href="#cap" x="134" y="342" width="52" height="52"/>
+      <rect x="104" y="424" width="112" height="16" rx="8" fill="var(--mc-slot,#D9532B)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="미디어캡슐 홈으로"><img src="images/logo.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="메뉴 열기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+      <ul>
+        <li><a href="machines.html">캡슐머신</a></li>
+        <li><a href="toys.html">캡슐토이</a></li>
+        <li><a href="business.html">창업 안내</a></li>
+        <li class="cta"><a href="business.html#contact">창업 문의</a></li>
+        <li><a href="refund.html" aria-current="page">환불 문의</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="page-head">
+      <svg class="caps" viewBox="0 0 160 58" aria-hidden="true">
+        <use class="cap" href="#cap" x="4" y="10" width="44" height="44"/>
+        <use class="cap" href="#cap" x="56" y="2" width="52" height="52" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+        <use class="cap" href="#cap" x="116" y="14" width="40" height="40"/>
+      </svg>
+      <h1 data-i18n="title">환불 문의</h1>
+      <p data-i18n="subtitle">환불 관련 정보를 입력해 주시면<b>담당자가 신속하게 처리해 드리겠습니다.</b></p>
+    </div>
+
+    <div class="col">
+      <section class="panel soft" aria-label="유의사항">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5"/><circle cx="12" cy="18" r=".6" fill="currentColor"/></svg><span data-i18n="notice_t">유의사항</span></h2>
+        <ul>
+          <li data-i18n="notice_1">상품이 나오지 않는 경우 결제는 1~2분 내 자동으로 취소됩니다.</li>
+          <li data-i18n="notice_2">일정 시간이 지나도 취소되지 않는 경우, 아래 양식을 작성해 주세요.</li>
+        </ul>
+      </section>
+
+      <form class="form" id="refund-form" novalidate>
+        <div class="field">
+          <label for="reason"><span data-i18n="reason">환불 사유</span><span class="req">*</span></label>
+          <select class="control" id="reason" name="reason" required>
+            <option value="" data-i18n="reason_0">사유를 선택해 주세요</option>
+            <option value="상품 안 나옴" data-i18n="reason_1">상품 안 나옴</option>
+            <option value="상품 불량" data-i18n="reason_2">상품 불량</option>
+            <option value="잘못된 상품 제공" data-i18n="reason_3">잘못된 상품 제공</option>
+            <option value="중복 결제" data-i18n="reason_4">중복 결제</option>
+            <option value="기타" data-i18n="reason_5">기타 (직접 입력)</option>
+          </select>
+          <input class="control" id="reason-text" name="reason-text" type="text" placeholder="환불 사유를 직접 입력해 주세요." data-i18n-ph="reason_text_ph" hidden>
+          <span class="err" data-for="reason" data-i18n="err_reason">환불 사유를 선택해 주세요.</span>
+          <span class="err" data-for="reason-text" data-i18n="err_reason_text">환불 사유를 입력해 주세요.</span>
+        </div>
+
+        <div class="field">
+          <span class="lbl"><span data-i18n="contact">연락처</span><span class="req">*</span></span>
+          <div class="seg" role="radiogroup" aria-label="고객 구분">
+            <label><input type="radio" name="customer" id="customer-kr" value="국내 고객" checked><span data-i18n="cust_kr">국내 고객</span></label>
+            <label><input type="radio" name="customer" id="customer-intl" value="해외 고객 (Foreigner)"><span data-i18n="cust_intl">해외 고객 (Foreigner)</span></label>
+          </div>
+          <input class="control" id="phone" name="phone" type="tel" inputmode="tel" placeholder="010-0000-0000" data-i18n-ph="phone_ph" required autocomplete="tel">
+          <span class="err" data-for="phone" data-i18n="err_phone">연락처를 입력해 주세요.</span>
+        </div>
+
+        <div class="field">
+          <label for="store"><span data-i18n="store">지역/매장명</span><span class="req">*</span></label>
+          <select class="control" id="store" name="store" required>
+            <option value="" data-i18n="store_0">이용하신 매장을 선택해 주세요</option>
+            <option>용산 아이파크몰</option>
+            <option>삼정타워</option>
+            <option>서면 아트박스</option>
+            <option>서면 가챠샵</option>
+            <option>해운대 NC백화점 가챠샵</option>
+            <option>센텀시티 롯데백화점</option>
+            <option>남포 아트박스</option>
+            <option>경주 황리단길</option>
+            <option>경주 대릉원 가챠샵</option>
+            <option>창원 대현프리몰</option>
+            <option>가챠샵 현풍점</option>
+            <option>가챠샵 부산정관점</option>
+          </select>
+          <label class="check"><input type="checkbox" id="store-other" name="store-other"><span data-i18n="store_other">찾는 매장이 없어요 (직접 입력)</span></label>
+          <input class="control" id="store-text" name="store-text" type="text" placeholder="예: ○○백화점 3층 캡슐머신" data-i18n-ph="store_text_ph" hidden>
+          <span class="hint" data-i18n="store_hint">이용하신 미디어캡슐 매장명을 입력해 주세요.</span>
+          <span class="err" data-for="store" data-i18n="err_store">매장을 선택하거나 직접 입력해 주세요.</span>
+        </div>
+
+        <div class="callout" data-i18n="callout">
+          <b>상품명 · 상품 가격 · 결제 시간 · 승인 번호</b>는 미입력 시, 확인을 위해 남겨주신 연락처로 직접 연락을 드립니다.
+          <span class="em">입력해 주시면 확인 절차 없이 더 빠르게 처리돼요.</span>
+        </div>
+
+        <div class="field">
+          <label for="product" data-i18n="product">상품명</label>
+          <input class="control" id="product" name="product" type="text" placeholder="예: 캡슐토이 상품명" data-i18n-ph="product_ph">
+          <span class="hint" data-i18n="product_hint">환불을 원하시는 상품명을 입력해 주세요.</span>
+        </div>
+
+        <div class="field">
+          <label for="price" data-i18n="price">상품 가격</label>
+          <input class="control" id="price" name="price" type="number" inputmode="numeric" min="0" step="100" placeholder="예: 3000">
+          <span class="hint" data-i18n="price_hint">상품의 가격을 원 단위로 입력해 주세요.</span>
+        </div>
+
+        <div class="field">
+          <label for="paid-at" data-i18n="paid">결제 시간</label>
+          <input class="control" id="paid-at" name="paid-at" type="datetime-local">
+          <span class="hint" data-i18n="paid_hint">결제하신 날짜와 시간을 선택해 주세요.</span>
+        </div>
+
+        <div class="field">
+          <span class="lbl" data-i18n="approval">카드승인번호 8자리</span>
+          <span class="hint" data-i18n="approval_hint">정확한 결제 내역 확인을 위해 승인번호와 카드번호 뒷자리 4자리를 입력해 주세요. 승인번호를 모르시는 경우 카드번호 뒷자리와 결제 정보를 통해 문의를 접수하실 수 있습니다.</span>
+          <div class="radio-list" role="radiogroup" aria-label="승인번호 입력 여부">
+            <label class="radio"><input type="radio" name="approval-mode" id="approval-yes" value="입력" checked><span data-i18n="approval_yes">승인번호를 입력할게요. (더욱 빠른 처리가 가능합니다.)</span></label>
+            <label class="radio"><input type="radio" name="approval-mode" id="approval-no" value="모름"><span data-i18n="approval_no">승인번호를 모르겠어요.</span></label>
+          </div>
+          <input class="control" id="approval" name="approval" type="text" inputmode="numeric" maxlength="8" placeholder="00000000" aria-label="승인 번호 8자리">
+          <div class="help" id="approval-help">
+            <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><span data-i18n="help_t">승인 번호 8자리 확인 방법</span></b>
+            <span data-i18n="help_1">• 모바일 앱: 카드사 앱 로그인 → '거래내역' 또는 '이용내역' 메뉴에서 확인</span>
+            <span data-i18n="help_2">• PC 홈페이지: 카드사 홈페이지 로그인 → '이용내역' 또는 '결제내역' 메뉴에서 확인</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="card4" data-i18n="card4">카드번호 뒷자리 4자리</label>
+          <input class="control" id="card4" name="card4" type="text" inputmode="numeric" maxlength="4" placeholder="카드번호 뒤 4자리" data-i18n-ph="card4_ph">
+          <span class="hint" data-i18n="card4_hint">실물 카드 또는 카드사 앱의 결제 내역에서 확인할 수 있습니다.</span>
+        </div>
+
+        <div class="agree">
+          <label class="check"><input type="checkbox" id="agree" name="agree" required><span><span class="badge" data-i18n="req_badge">필수</span><span data-i18n="agree">필수 항목에 모두 동의합니다.</span></span></label>
+          <div class="row2"><span data-i18n="privacy">· 개인정보 수집·이용 동의</span><a href="#" data-form="privacy" data-i18n="view">보기</a></div>
+          <span class="err" data-for="agree" data-i18n="err_agree">개인정보 수집·이용에 동의해 주세요.</span>
+        </div>
+
+        <button class="btn btn-brand submit" type="submit" data-i18n="submit">제출하기</button>
+        <p class="note" style="text-align:center" data-i18n="note">실제 접수 연결(구글 설문지 등)은 다음 단계에서 이어집니다.</p>
+      </form>
+
+      <section class="done" id="done" aria-live="polite">
+        <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="#FFEDE4"/><path d="M20 33l8 8 16-18" stroke="#1B2A4A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h2 data-i18n="done_t">문의가 접수됐어요</h2>
+        <p data-i18n="done_p">남겨주신 연락처로 담당자가 확인 후 연락드릴게요.<br>영업일 기준 1~3일 안에 처리됩니다.</p>
+      </section>
+
+      <section class="panel" aria-label="환불 안내사항">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v4"/><path d="M8 3h8l-1 6 3 4H6l3-4-1-6z"/></svg><span data-i18n="info_t">환불 안내사항</span></h2>
+        <ul>
+          <li data-i18n="info_1">환불 처리는 영업일 기준(주말/공휴일 제외) 1~3일 소요됩니다.</li>
+          <li data-i18n="info_2">결제 취소는 결제하신 카드로 환불됩니다.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <button class="close" id="modal-close" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 300 230">
+        <defs>
+          <linearGradient id="mBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3F5F9"/></linearGradient>
+          <linearGradient id="mGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E8ECF4"/></linearGradient>
+        </defs>
+        <!-- 머신 몸통 -->
+        <rect x="30" y="10" width="240" height="220" rx="22" fill="url(#mBody)" stroke="#1B2A4A" stroke-width="4"/>
+        <!-- 위쪽 캡슐 창 -->
+        <rect x="46" y="24" width="208" height="56" rx="12" fill="url(#mGlass)" stroke="#1B2A4A" stroke-width="3"/>
+        <g>
+          <use href="#cap" x="61" y="39" width="34" height="34"/>
+          <use href="#cap" x="101" y="45" width="30" height="30" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+          <use href="#cap" x="134" y="36" width="36" height="36" style="--cap-bottom:#1B2A4A"/>
+          <use href="#cap" x="176" y="47" width="28" height="28"/>
+          <use href="#cap" x="208" y="40" width="32" height="32" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+        </g>
+        <!-- 손잡이 -->
+        <circle cx="150" cy="118" r="22" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="4"/>
+        <circle cx="150" cy="118" r="11" fill="#1B2A4A"/>
+        <rect x="146" y="98" width="8" height="40" rx="4" fill="#1B2A4A"/>
+        <!-- 가격 표시 -->
+        <rect x="54" y="104" width="54" height="28" rx="8" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3"/>
+        <rect x="62" y="112" width="10" height="12" rx="2" fill="#FF6B35"/><rect x="76" y="112" width="10" height="12" rx="2" fill="#FF6B35"/><rect x="90" y="112" width="10" height="12" rx="2" fill="#FF6B35"/>
+        <!-- 카드 투입구 -->
+        <rect x="194" y="104" width="54" height="28" rx="8" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3"/>
+        <rect x="204" y="116" width="34" height="5" rx="2.5" fill="#1B2A4A"/>
+        <!-- 배출구 -->
+        <rect x="54" y="156" width="80" height="56" rx="12" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3" stroke-dasharray="6 5"/>
+        <path d="M70 188 q24 -14 48 0" fill="none" stroke="#FF6B35" stroke-width="3" stroke-linecap="round"/>
+        <!-- 걸린 캡슐 -->
+        <circle cx="204" cy="178" r="36" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="4"/>
+        <circle cx="204" cy="178" r="30" fill="#FFEDE4"/>
+        <g transform="translate(204 170)">
+          <use href="#cap" x="-16" y="-16" width="32" height="32"/>
+          <path d="M19 -14 l5 -5 M23 -4 l7 -1 M14 -20 l2 -7" stroke="#FF6B35" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2 id="modal-title">환불 문의 전 확인해 주세요!</h2>
+      <ol class="modal-list">
+        <li>환불 처리는 1~3일 소요됩니다.</li>
+        <li>캡슐 배관 안쪽까지 다시 한번 확인해 주세요.</li>
+        <li>환불 관련 정보를 정확히 입력하셔야 환불 처리됩니다.</li>
+      </ol>
+      <div class="warn">환불 문의 전, 캡슐이 없는지 꼭 확인해 주세요!</div>
+      <button class="btn btn-brand submit" id="modal-ok" type="button">확인했어요</button>
+      <label class="check"><input type="checkbox" id="modal-hide">오늘 하루 보지 않기</label>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <svg class="deco" viewBox="0 0 160 120" aria-hidden="true">
+      <use class="cap" href="#cap" x="0" y="30" width="56" height="56"/>
+      <use class="cap" href="#cap" x="70" y="0" width="44" height="44" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+      <use class="cap" href="#cap" x="104" y="56" width="52" height="52"/>
+    </svg>
+    <a class="logo" href="index.html" aria-label="미디어캡슐"><img src="images/logo.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
+    <div class="info">
+      <div><span>(주)미디어캡슐</span><span class="sep">|</span><span>대표: 정태선</span><span class="sep">|</span><span>주소: 경상남도 양산시 상북면 소석1길 11-1</span></div>
+      <div><span>사업자등록번호: 607-10-88688</span><span class="sep">|</span><span>대표번호: 입력 예정</span><span class="sep">|</span><span>이메일: 입력 예정</span></div>
+    </div>
+    <div class="links">
+      <a href="#" data-form="privacy">개인정보처리방침</a>
+      <a href="business.html">창업 안내</a>
+      <a href="refund.html">환불 문의</a>
+    </div>
+    <div class="copy">COPYRIGHT © MEDIA CAPSULE. ALL RIGHTS RESERVED.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden>개인정보처리방침 페이지는 다음 단계에서 연결됩니다.</div>
+
+<script>
+(function(){
+  // 메뉴
+  var btn=document.getElementById('menu-btn'), nav=document.getElementById('nav');
+  btn.addEventListener('click',function(){
+    var open=nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');
+    btn.querySelector('path').setAttribute('d',open?'M6 6l12 12M18 6L6 18':'M4 7h16M4 12h16M4 17h16');
+  });
+  nav.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){nav.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.querySelector('path').setAttribute('d','M4 7h16M4 12h16M4 17h16');}
+  });
+
+  // 안내 토스트
+  var toast=document.getElementById('toast'), timer;
+  function showToast(msg){
+    toast.textContent=msg; toast.hidden=false; clearTimeout(timer);
+    timer=setTimeout(function(){toast.hidden=true;},2800);
+  }
+  var links=document.querySelectorAll('[data-form]');
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',function(e){e.preventDefault();showToast('개인정보 수집·이용 동의 전문은 다음 단계에서 연결됩니다.');});
+  }
+
+  // 팝업: "오늘 하루 보지 않기"
+  var modal=document.getElementById('modal');
+  function closeModal(){
+    if(document.getElementById('modal-hide').checked){
+      try{localStorage.setItem('mc-refund-notice-hide',String(Date.now()+24*60*60*1000));}catch(e){}
+    }
+    modal.hidden=true;
+  }
+  try{
+    var until=parseInt(localStorage.getItem('mc-refund-notice-hide')||'0',10);
+    if(until>Date.now()) modal.hidden=true;
+  }catch(e){}
+  document.getElementById('modal-ok').addEventListener('click',closeModal);
+  document.getElementById('modal-close').addEventListener('click',closeModal);
+
+
+  // 해외 고객 선택 시 영어로 전환
+  var EN = {
+    title:"Refund Request", subtitle:"Fill in the details below and<b>our team will process your refund promptly.</b>",
+    notice_t:"Please note", notice_1:"If no product comes out, the payment is cancelled automatically within 1–2 minutes.",
+    notice_2:"If it is not cancelled after a while, please fill in the form below.",
+    reason:"Reason for refund", reason_0:"Select a reason", reason_1:"Product did not come out", reason_2:"Defective product",
+    reason_3:"Wrong product dispensed", reason_4:"Duplicate payment", reason_5:"Other (please specify)", reason_text_ph:"Please describe the reason.",
+    err_reason:"Please select a reason.", err_reason_text:"Please enter the reason.",
+    contact:"Contact", cust_kr:"Korean customer", cust_intl:"Foreign customer", phone_ph:"Phone number or email", err_phone:"Please enter your contact.",
+    store:"Store", store_0:"Select the store you visited", store_other:"My store is not listed (enter manually)", store_text_ph:"e.g. 3F capsule machine, ○○ Department Store",
+    store_hint:"Enter the name of the Media Capsule store you visited.", err_store:"Please select or enter a store.",
+    callout:"<b>Product name · price · payment time · approval number</b> — if left blank, we will contact you to confirm the details.<span class=\"em\">Filling them in lets us process your refund faster.</span>",
+    product:"Product name", product_ph:"e.g. capsule toy name", product_hint:"Enter the name of the product you want refunded.",
+    price:"Product price", price_hint:"Enter the price in Korean won (KRW).",
+    paid:"Payment time", paid_hint:"Select the date and time of payment.",
+    approval:"Card approval number (8 digits)", approval_hint:"To verify the payment, please enter the approval number and the last 4 digits of your card. If you don't know the approval number, you can still submit with the last 4 digits and payment details.",
+    approval_yes:"I will enter the approval number. (Faster processing)", approval_no:"I don't know the approval number.",
+    help_t:"How to find the 8-digit approval number", help_1:"• Mobile app: log in to your card issuer's app → 'Transactions' or 'Usage history'",
+    help_2:"• Website: log in to your card issuer's website → 'Usage history' or 'Payment history'",
+    card4:"Last 4 digits of card number", card4_ph:"Last 4 digits", card4_hint:"You can find it on your card or in your card app's payment history.",
+    req_badge:"Required", agree:"I agree to all required items.", privacy:"· Consent to collection and use of personal information", view:"View",
+    err_agree:"Please agree to the collection and use of personal information.", submit:"Submit",
+    note:"Form submission (Google Forms, etc.) will be connected in the next step.",
+    done_t:"Your request has been received", done_p:"We will review it and contact you.<br>Processing takes 1–3 business days.",
+    info_t:"Refund information", info_1:"Refunds take 1–3 business days (excluding weekends and holidays).", info_2:"The payment is refunded to the card you paid with."
+  };
+  var KO = {};
+  document.querySelectorAll('[data-i18n]').forEach(function(el){ KO[el.getAttribute('data-i18n')] = el.innerHTML; });
+  var KOPH = {};
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ KOPH[el.getAttribute('data-i18n-ph')] = el.getAttribute('placeholder'); });
+  function setLang(en){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k=el.getAttribute('data-i18n'); var v = en ? EN[k] : KO[k]; if(v!==undefined) el.innerHTML=v;
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+      var k=el.getAttribute('data-i18n-ph'); el.setAttribute('placeholder', en ? EN[k] : KOPH[k]);
+    });
+    document.documentElement.lang = en ? 'en' : 'ko';
+  }
+  document.getElementById('customer-kr').addEventListener('change', function(){ setLang(false); });
+  document.getElementById('customer-intl').addEventListener('change', function(){ setLang(true); });
+
+  // 환불 사유 기타(직접 입력)
+  var reasonSel=document.getElementById('reason'), reasonText=document.getElementById('reason-text');
+  reasonSel.addEventListener('change',function(){
+    var isOther=reasonSel.value==='기타';
+    reasonText.hidden=!isOther;
+    if(isOther) reasonText.focus();
+  });
+
+  // 매장 직접 입력
+  var other=document.getElementById('store-other'), storeSel=document.getElementById('store'), storeText=document.getElementById('store-text');
+  other.addEventListener('change',function(){
+    storeText.hidden=!other.checked; storeSel.disabled=other.checked;
+    if(other.checked){storeSel.value='';storeText.focus();}
+  });
+
+  // 승인번호 모름
+  var apYes=document.getElementById('approval-yes'), apNo=document.getElementById('approval-no');
+  var approval=document.getElementById('approval'), help=document.getElementById('approval-help');
+  function syncApproval(){ var know=apYes.checked; approval.hidden=!know; help.hidden=know; }
+  syncApproval();
+  apYes.addEventListener('change',syncApproval); apNo.addEventListener('change',syncApproval);
+
+  // 숫자만
+  ['approval','card4'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.addEventListener('input',function(){el.value=el.value.replace(/\D/g,'');});
+  });
+
+  // 제출
+  var form=document.getElementById('refund-form'), done=document.getElementById('done');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=true;
+    var errs=form.querySelectorAll('.err'); for(var j=0;j<errs.length;j++) errs[j].style.display='';
+    function fail(name){ ok=false; var el=form.querySelector('.err[data-for="'+name+'"]'); if(el) el.style.display='block'; }
+    if(!reasonSel.value) fail('reason');
+    else if(reasonSel.value==='기타' && !reasonText.value.trim()) fail('reason-text');
+    if(!document.getElementById('phone').value.trim()) fail('phone');
+    var storeOk = other.checked ? storeText.value.trim()!=='' : storeSel.value!=='';
+    if(!storeOk) fail('store');
+    if(!document.getElementById('agree').checked) fail('agree');
+    if(!ok){ var first=form.querySelector('.err[style*="block"]'); if(first) first.scrollIntoView({block:'center',behavior:'smooth'}); return; }
+    form.style.display='none'; done.style.display='block';
+    done.scrollIntoView({block:'center',behavior:'smooth'});
+  });
+})();
+</script>
+<script src="inquiry.js" defer></script>
+</body>
+</html>

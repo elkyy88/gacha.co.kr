@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>캡슐머신 — 미디어캡슐</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+/* 레이아웃: 캡슐 선반 — 메인 페이지와 같은 띠 구조. 색·글꼴 토큰은 메인 페이지와 동일하게 유지. */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --fg:#1B2A4A; --muted:#5C6678; --line:#DFE4EC;
+  --brand:#1B2A4A; --brand-ink:#1B2A4A; --brand-soft:#E8ECF4; --brand-deep:#121D33;
+  --accent:#FF6B35; --accent-deep:#E4551F; --accent-soft:#FFEDE4; --accent-line:#FFD8C6; --on-accent:#FFFFFF;
+  --hero-fg:#FFFFFF; --cap-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231B2A4A'/%3E%3Cpath d='M7 32a25 25 0 0 1 50 0z' fill='%23FFFFFF'/%3E%3Cpath d='M7 32a25 25 0 0 0 50 0z' fill='%23FF6B35'/%3E%3Crect x='7' y='29.5' width='50' height='5' fill='%231B2A4A'/%3E%3C/svg%3E");
+  --font-display:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-logo:"Montserrat","Noto Sans KR",Arial,sans-serif;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* 다크 모드와 상관없이 항상 밝은 색으로 고정 */
+
+*{box-sizing:border-box}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1100px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-logo);font-size:24px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);line-height:1.2}
+.eyebrow::before{content:"";width:24px;height:24px;flex:none;background:var(--cap-img) no-repeat center/contain}
+h1,h2,h3{font-family:var(--font-display);font-weight:800;line-height:1.25;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(26px,3.4vw,40px);margin:8px 0 12px}
+h3{font-size:20px}
+p{margin:0}
+.lead{color:var(--muted);max-width:60ch}
+.section-head{max-width:640px;margin-bottom:36px}
+.band{padding-block:64px}
+.band.tint{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sample{display:inline-block;font-size:11px;font-weight:700;line-height:1;padding:5px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent-deep);vertical-align:middle;margin-left:6px}
+.note{font-size:13px;color:var(--muted)}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--font-body);font-size:15px;line-height:1.2}
+.btn-primary{background:var(--accent);color:#FFFFFF;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn-ghost{background:transparent;color:var(--hero-fg);border-color:rgba(255,255,255,.65)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-brand{background:var(--brand);color:#FFFFFF;border-color:var(--brand)}
+.btn-brand:hover{filter:brightness(1.12)}
+.btn-outline{background:transparent;color:var(--brand-ink);border-color:var(--brand-ink)}
+.btn-outline:hover{background:var(--brand-soft)}
+
+/* 헤더 */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;position:relative}
+.logo{display:block;line-height:0}
+.logo img{height:54px;width:auto;display:block}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px}
+.nav a{display:block;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;color:var(--brand-ink)}
+.nav a:hover,.nav a:focus-visible,.nav a[aria-current="page"]{background:var(--brand-soft);color:var(--brand-ink)}
+.nav .cta a{background:var(--brand);color:#FFFFFF;font-weight:700}
+.nav li.cta+li.cta{margin-left:4px}
+.nav .cta a:hover{background:var(--brand);filter:brightness(1.12)}
+.menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line);background:var(--surface);border-radius:12px;color:var(--fg);cursor:pointer;align-items:center;justify-content:center}
+.menu-btn svg{width:22px;height:22px;display:block}
+@media (max-width:860px){
+  .site-header{position:static}
+  .site-header .wrap{flex-wrap:wrap;padding-block:10px 12px;gap:10px}
+  .logo img{height:42px}
+  .menu-btn{display:none}
+  .nav{width:100%}
+  .nav ul{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  .nav li{grid-column:span 2}
+  .nav li:nth-child(n+4){grid-column:span 3}
+  .nav a{text-align:center;padding:9px 4px;font-size:14px;font-weight:600;background:var(--brand-soft);color:var(--brand-ink);white-space:nowrap}
+  .nav a[aria-current="page"]{box-shadow:0 0 0 2px var(--brand-ink) inset}
+  .nav .cta a{background:var(--brand);color:#FFFFFF}
+}
+
+/* 캡슐 그림 (로고 모티프) */
+.cap-ico{width:40px;height:40px;display:block;flex:none}
+.cap-ico.sm{width:18px;height:18px}
+.cap-ico.navy{--cap-bottom:#1B2A4A}
+.cap-ico.flip{--cap-top:#FF6B35;--cap-bottom:#FFFFFF}
+.cap{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+  .cap{animation:float 6s ease-in-out infinite}
+  .cap:nth-child(2){animation-delay:-1.5s}.cap:nth-child(3){animation-delay:-3s}.cap:nth-child(4){animation-delay:-4.5s}.cap:nth-child(5){animation-delay:-2.2s}.cap:nth-child(6){animation-delay:-0.8s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+}
+
+/* 페이지 머리: 남색 바탕 + 흰 글씨 + 주황 포인트, 오른쪽에 떠다니는 캡슐 */
+.page-hero{background:var(--brand);color:var(--hero-fg);overflow:hidden;--mc-ink:#FFFFFF}
+.page-hero .wrap{padding-block:52px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
+.page-hero .txt{display:grid;gap:14px;min-width:0}
+.page-hero .eyebrow{color:var(--accent)}
+.page-hero h1{font-size:clamp(32px,4.6vw,52px);color:#FFFFFF}
+.page-hero p{max-width:52ch;opacity:.92;font-size:17px}
+.page-hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.page-hero .caps{width:230px;height:auto;display:block}
+@media (max-width:760px){ .page-hero .wrap{grid-template-columns:1fr;gap:8px;padding-block:40px 30px} .page-hero .caps{width:140px;justify-self:end;margin-top:-2px} }
+
+/* 머신 카드 */
+.machines{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.machine{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;min-width:0;display:grid}
+.band.tint .machine{background:var(--bg)}
+.machine .photo{margin:0;aspect-ratio:3/4;max-width:100%;background:#FFFFFF;border-bottom:1px solid var(--line);overflow:hidden}
+.machine .photo img{width:100%;height:100%;object-fit:cover;display:block}
+.machine .ph{aspect-ratio:3/4;max-width:100%;background:var(--brand-soft);display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:12px;border-bottom:1px dashed var(--line)}
+.machine .ph svg{width:28px;height:28px;display:block;margin:0 auto 6px;opacity:.7}
+.machine .body{padding:20px 22px 22px;display:grid;gap:8px}
+.machine p{color:var(--muted);font-size:15px}
+.machine p+p{margin-top:8px}
+.machine ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.machine li{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--brand-soft);color:var(--brand-ink)}
+
+/* 표 */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;background:var(--brand-soft);color:var(--brand-ink);font-size:13px;letter-spacing:.04em}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;white-space:nowrap}
+@media (max-width:640px){
+  .table-wrap{border:0;background:transparent;overflow:visible}
+  table{min-width:0;display:block}
+  thead{display:none}
+  tbody{display:grid;gap:12px}
+  tr{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px 16px 10px}
+  td{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:8px 0;border-bottom:1px solid var(--line);white-space:normal}
+  td:last-child{border-bottom:0}
+  td:first-child{display:block;font-family:var(--font-display);font-weight:800;font-size:17px;color:var(--brand-ink);padding:10px 0 6px;border-bottom:1px solid var(--line)}
+  td[data-label]::before{content:attr(data-label);font-size:12px;font-weight:700;color:var(--muted);padding-top:2px;min-width:72px}
+}
+
+/* 문의 띠 */
+.cta-band{background:var(--accent-soft);border-top:1px solid var(--accent-line);border-bottom:1px solid var(--accent-line)}
+.cta-band .wrap{padding-block:48px;display:grid;gap:16px;justify-items:start}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+
+/* 푸터 */
+.site-footer{background:var(--brand);color:#FFFFFF;padding-block:48px 56px;overflow:hidden}
+.site-footer .wrap{display:grid;gap:22px;position:relative}
+.site-footer .logo{background:#FFFFFF;padding:8px 14px;border-radius:14px;width:max-content;max-width:100%}
+.site-footer .logo img{height:46px}
+.site-footer .deco{position:absolute;right:0;top:-6px;width:150px;height:auto}
+@media (max-width:860px){ .site-footer .deco{width:84px;top:4px} }
+.site-footer .info{display:grid;gap:4px;font-size:13px;opacity:.88;max-width:70ch}
+.site-footer .info span{display:inline-block}
+.site-footer .info .sep{opacity:.45;margin:0 8px}
+.site-footer .links{display:flex;flex-wrap:wrap;gap:16px;font-size:13px}
+.site-footer .links a{text-decoration:none;opacity:.85;display:inline-block;padding:6px 0}
+.site-footer .links a:hover{opacity:1;text-decoration:underline}
+.site-footer .copy{font-size:12px;letter-spacing:.06em;opacity:.7;font-family:var(--font-logo);font-weight:800}
+@media (max-width:640px){ .site-footer .info span{display:block} .site-footer .info .sep{display:none} .site-footer .info{gap:8px} }
+
+/* 안내 토스트 */
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:#FFFFFF;padding:12px 18px;border-radius:999px;font-size:14px;z-index:40;max-width:calc(100% - 32px);text-align:center}
+</style>
+</head>
+<body>
+
+<!-- 캡슐·머신 그림 (로고와 같은 남색·주황) — 페이지 곳곳에서 <use href="#cap"> 로 재사용 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="cap" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="var(--cap-ink,#1B2A4A)"/>
+      <path d="M7 32a25 25 0 0 1 50 0z" fill="var(--cap-top,#FFFFFF)"/>
+      <path d="M7 32a25 25 0 0 0 50 0z" fill="var(--cap-bottom,#FF6B35)"/>
+      <rect x="7" y="29.5" width="50" height="5" fill="var(--cap-ink,#1B2A4A)"/>
+    </symbol>
+    <symbol id="machine" viewBox="0 0 320 480">
+      <circle cx="160" cy="150" r="132" fill="var(--mc-glass,#FFFFFF)" stroke="var(--mc-ink,#1B2A4A)" stroke-width="16"/>
+      <ellipse cx="96" cy="74" rx="15" ry="30" transform="rotate(-35 96 74)" fill="var(--mc-hl,#E8ECF4)"/>
+      <use href="#cap" x="122" y="86" width="62" height="62"/>
+      <use href="#cap" x="182" y="122" width="58" height="58"/>
+      <use href="#cap" x="78" y="140" width="62" height="62"/>
+      <use href="#cap" x="140" y="178" width="62" height="62"/>
+      <rect x="16" y="270" width="288" height="38" rx="15" fill="var(--mc-ink,#1B2A4A)"/>
+      <rect x="40" y="304" width="240" height="166" rx="30" fill="var(--mc-ink,#1B2A4A)"/>
+      <rect x="58" y="320" width="204" height="132" rx="20" fill="var(--mc-body,#FF6B35)"/>
+      <circle cx="160" cy="368" r="40" fill="#FFFFFF"/>
+      <use href="#cap" x="134" y="342" width="52" height="52"/>
+      <rect x="104" y="424" width="112" height="16" rx="8" fill="var(--mc-slot,#D9532B)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="미디어캡슐 홈으로"><img src="images/logo.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="메뉴 열기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+      <ul>
+        <li><a href="machines.html" aria-current="page">캡슐머신</a></li>
+        <li><a href="toys.html">캡슐토이</a></li>
+        <li><a href="business.html">창업 안내</a></li>
+        <li class="cta"><a href="business.html#contact">창업 문의</a></li>
+        <li><a href="refund.html">환불 문의</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="txt">
+      <span class="eyebrow">캡슐머신</span>
+      <h1>공간에 맞춰 고르는 캡슐머신</h1>
+      <p>카드, 토큰, 동전. 공간과 손님에 맞는 결제 방식의 머신을 고를 수 있습니다.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="business.html#contact">구매 문의하기</a>
+        <a class="btn btn-ghost" href="#compare">사양 비교</a>
+      </div>
+      </div>
+      <svg class="caps" viewBox="0 0 230 190" aria-hidden="true">
+        <use href="#machine" x="60" y="4" width="122" height="183"/>
+        <use class="cap" href="#cap" x="4" y="30" width="52" height="52"/>
+        <use class="cap" href="#cap" x="182" y="14" width="44" height="44" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+        <use class="cap" href="#cap" x="176" y="110" width="50" height="50"/>
+        <use class="cap" href="#cap" x="12" y="120" width="40" height="40" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="band" id="types">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">머신 종류</span>
+        <h2>결제 방식에 따라 세 가지로 나뉘어요</h2>
+        <p class="lead">설치 공간과 손님에 맞춰 알맞은 머신을 제안해 드립니다.</p>
+      </div>
+      <div class="machines">
+        <article class="machine">
+          <figure class="photo"><img src="images/machine-card.jpg" alt="카드자판기형 캡슐머신" loading="lazy"></figure>
+          <div class="body">
+            <h3>카드자판기형</h3>
+            <p>신용카드·체크카드로 바로 결제합니다. 현금 없이도 누구나 이용할 수 있어 무인 운영에 가장 알맞습니다.</p>
+            <p>1단부터 3단까지 쌓을 수 있습니다. (위의 사진은 2단입니다)</p>
+            <ul><li>카드 결제</li><li>무인 운영</li><li>매출 자동 집계</li></ul>
+          </div>
+        </article>
+        <article class="machine">
+          <figure class="photo"><img src="images/machine-token.jpg" alt="토큰자판기형 캡슐머신" loading="lazy"></figure>
+          <div class="body">
+            <h3>토큰자판기형</h3>
+            <p>토큰 교환기에서 토큰을 산 뒤 머신에 넣어 뽑습니다. 여러 대를 한곳에 모아 운영하는 가챠샵에 알맞습니다.</p>
+            <ul><li>토큰 결제</li><li>여러 대 운영</li><li>가챠샵·뽑기샵</li></ul>
+          </div>
+        </article>
+        <article class="machine">
+          <figure class="photo"><img src="images/machine-coin.jpg" alt="동전자판기형 캡슐머신" loading="lazy"></figure>
+          <div class="body">
+            <h3>동전자판기형</h3>
+            <p>500원 동전을 넣고 손잡이를 돌리는 가장 익숙한 방식입니다. 전원이 필요 없어 어디든 둘 수 있습니다.</p>
+            <ul><li>동전 결제</li><li>전원 불필요</li><li>설치 간편</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band tint" id="compare">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">사양 비교</span>
+        <h2>어떤 머신이 맞을까요?</h2>
+        <p class="lead">세 가지 머신의 결제 방식, 전원, 크기, 캡슐 규격을 한눈에 비교해 보세요.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>카드자판기형</th><th>토큰자판기형</th><th>동전자판기형</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>결제 방식</td><td data-label="카드자판기형">신용·체크카드</td><td data-label="토큰자판기형">토큰 (교환기에서 구매)</td><td data-label="동전자판기형">500원 동전</td></tr>
+            <tr><td>전원</td><td data-label="카드자판기형">일반 콘센트 (110/220V 12W)</td><td data-label="토큰자판기형">토큰 교환기만 콘센트</td><td data-label="동전자판기형">동전교환기 또는 지폐교환기만 콘센트</td></tr>
+            <tr><td>크기</td><td data-label="카드자판기형">380 × 440 × 630 mm (가로×세로×높이)</td><td data-label="토큰자판기형">가로 320 mm × 세로 586 mm</td><td data-label="동전자판기형">가로 320 mm × 세로 586 mm</td></tr>
+            <tr><td>캡슐 규격</td><td data-label="카드자판기형">45 mm ~ 100 mm</td><td data-label="토큰자판기형">45 mm ~ 75 mm</td><td data-label="동전자판기형">45 mm ~ 75 mm</td></tr>
+            <tr><td>어울리는 공간</td><td data-label="카드자판기형">백화점·쇼핑몰, 무인 매장</td><td data-label="토큰자판기형">가챠샵·뽑기샵, 여러 대 운영</td><td data-label="동전자판기형">소매점·관광지, 소규모</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="contact">
+    <div class="wrap">
+      <span class="eyebrow">설치 문의</span>
+      <h2>우리 공간에는 어떤 머신이 맞을지 물어보세요</h2>
+      <p class="lead">공간 위치와 크기를 알려주시면 알맞은 머신과 대수를 제안해 드립니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-brand" href="business.html#contact">창업 문의하기</a>
+        <a class="btn btn-outline" href="business.html">창업 안내 보기</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <svg class="deco" viewBox="0 0 160 120" aria-hidden="true">
+      <use class="cap" href="#cap" x="0" y="30" width="56" height="56"/>
+      <use class="cap" href="#cap" x="70" y="0" width="44" height="44" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+      <use class="cap" href="#cap" x="104" y="56" width="52" height="52"/>
+    </svg>
+    <a class="logo" href="index.html" aria-label="미디어캡슐"><img src="images/logo.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
+    <div class="info">
+      <div><span>(주)미디어캡슐</span><span class="sep">|</span><span>대표: 정태선</span><span class="sep">|</span><span>주소: 경상남도 양산시 상북면 소석1길 11-1</span></div>
+      <div><span>사업자등록번호: 607-10-88688</span><span class="sep">|</span><span>대표번호: 입력 예정</span><span class="sep">|</span><span>이메일: 입력 예정</span></div>
+    </div>
+    <div class="links">
+      <a href="#" data-form="privacy">개인정보처리방침</a>
+      <a href="business.html">창업 안내</a>
+      <a href="refund.html">환불 문의</a>
+    </div>
+    <div class="copy">COPYRIGHT © MEDIA CAPSULE. ALL RIGHTS RESERVED.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden>개인정보처리방침 페이지는 다음 단계에서 연결됩니다.</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn'), nav=document.getElementById('nav');
+  btn.addEventListener('click',function(){
+    var open=nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');
+    btn.querySelector('path').setAttribute('d',open?'M6 6l12 12M18 6L6 18':'M4 7h16M4 12h16M4 17h16');
+  });
+  nav.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){nav.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.querySelector('path').setAttribute('d','M4 7h16M4 12h16M4 17h16');}
+  });
+  var toast=document.getElementById('toast'), timer;
+  var links=document.querySelectorAll('[data-form]');
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',function(e){
+      e.preventDefault();
+      toast.hidden=false;
+      clearTimeout(timer);
+      timer=setTimeout(function(){toast.hidden=true;},2800);
+    });
+  }
+})();
+</script>
+<script src="inquiry.js" defer></script>
+</body>
+</html>
