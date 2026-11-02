@@ -344,14 +344,16 @@ select.control{appearance:none;-webkit-appearance:none;background-image:url("dat
           <span class="err" data-for="agree" data-i18n="err_agree">개인정보 수집·이용에 동의해 주세요.</span>
         </div>
 
-        <button class="btn btn-brand submit" type="submit" data-i18n="submit">제출하기</button>
-        <p class="note" style="text-align:center" data-i18n="note">실제 접수 연결(구글 설문지 등)은 다음 단계에서 이어집니다.</p>
+        <button class="btn btn-brand submit" id="refund-submit" type="submit" data-i18n="submit">제출하기</button>
+        <a class="btn btn-brand submit" id="refund-submit-link" href="#" target="_blank" rel="noopener" role="button" data-i18n="submit_link" hidden style="justify-content:center;text-align:center">제출하기</a>
+        <p class="err" id="refund-fail" style="text-align:center" data-i18n="fail">전송에 실패했어요. 잠시 후 다시 시도해 주세요.</p>
       </form>
 
       <section class="done" id="done" aria-live="polite">
         <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="#FFEDE4"/><path d="M20 33l8 8 16-18" stroke="#1B2A4A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <h2 data-i18n="done_t">문의가 접수됐어요</h2>
         <p data-i18n="done_p">남겨주신 연락처로 담당자가 확인 후 연락드릴게요.<br>영업일 기준 1~3일 안에 처리됩니다.</p>
+        <p class="note" id="refund-preview-note" style="margin-top:12px" data-i18n="preview_note" hidden>새로 열린 창에 "응답이 기록되었습니다"가 보이면 정상 접수된 것입니다.</p>
       </section>
 
       <section class="panel" aria-label="환불 안내사항">
@@ -507,7 +509,8 @@ select.control{appearance:none;-webkit-appearance:none;background-image:url("dat
     card4:"Last 4 digits of card number", card4_ph:"Last 4 digits", card4_hint:"You can find it on your card or in your card app's payment history.",
     req_badge:"Required", agree:"I agree to all required items.", privacy:"· Consent to collection and use of personal information", view:"View",
     err_agree:"Please agree to the collection and use of personal information.", submit:"Submit",
-    note:"Form submission (Google Forms, etc.) will be connected in the next step.",
+    submit_link:"Submit", fail:"Sending failed. Please try again shortly.",
+    preview_note:"If a new window shows \"Your response has been recorded\", your request was received.",
     done_t:"Your request has been received", done_p:"We will review it and contact you.<br>Processing takes 1–3 business days.",
     info_t:"Refund information", info_1:"Refunds take 1–3 business days (excluding weekends and holidays).", info_2:"The payment is refunded to the card you paid with."
   };
@@ -555,10 +558,19 @@ select.control{appearance:none;-webkit-appearance:none;background-image:url("dat
     el.addEventListener('input',function(){el.value=el.value.replace(/\D/g,'');});
   });
 
-  // 제출
+  // 제출 → 구글 설문지 "미디어캡슐 환불 문의"로 전송되고, 대표님 메일로 알림이 갑니다.
+  var REFUND_FORM = {
+    action: 'https://docs.google.com/forms/d/e/1FAIpQLSfOjbTbyTniJ7djUe7JRUAJ6GjNAuLuuizIeuOqLuEWj1N0Zw/formResponse',
+    fields: { reason:'entry.903700758', customer:'entry.350259105', phone:'entry.1122895557', store:'entry.1660499687',
+              product:'entry.1954057341', price:'entry.139005955', paidAt:'entry.1824250811', approval:'entry.924829479', card4:'entry.1957675809' }
+  };
+  /* claude.ai 미리보기 주소에서는 보안 제한으로 조용히 보내기가 막혀 있어 구글 접수 페이지를 새 창으로 엽니다. 정식 주소에서는 조용히 전송됩니다. */
+  var PREVIEW_HOST = /(^|\.)claudeusercontent\.com$|(^|\.)claude\.ai$/.test(location.hostname);
   var form=document.getElementById('refund-form'), done=document.getElementById('done');
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
+  var submitBtn=document.getElementById('refund-submit'), submitLink=document.getElementById('refund-submit-link');
+  var failMsg=document.getElementById('refund-fail'), previewNote=document.getElementById('refund-preview-note');
+
+  function validate(){
     var ok=true;
     var errs=form.querySelectorAll('.err'); for(var j=0;j<errs.length;j++) errs[j].style.display='';
     function fail(name){ ok=false; var el=form.querySelector('.err[data-for="'+name+'"]'); if(el) el.style.display='block'; }
@@ -568,9 +580,46 @@ select.control{appearance:none;-webkit-appearance:none;background-image:url("dat
     var storeOk = other.checked ? storeText.value.trim()!=='' : storeSel.value!=='';
     if(!storeOk) fail('store');
     if(!document.getElementById('agree').checked) fail('agree');
-    if(!ok){ var first=form.querySelector('.err[style*="block"]'); if(first) first.scrollIntoView({block:'center',behavior:'smooth'}); return; }
-    form.style.display='none'; done.style.display='block';
-    done.scrollIntoView({block:'center',behavior:'smooth'});
+    if(!ok){ var first=form.querySelector('.err[style*="block"]'); if(first) first.scrollIntoView({block:'center',behavior:'smooth'}); }
+    return ok;
+  }
+  function val(id){ return (document.getElementById(id).value||'').trim(); }
+  function payload(){
+    return {
+      reason: reasonSel.value==='기타' ? '기타: '+reasonText.value.trim() : reasonSel.value,
+      customer: (document.querySelector('input[name="customer"]:checked')||{}).value||'',
+      phone: val('phone'),
+      store: other.checked ? storeText.value.trim() : storeSel.value,
+      product: val('product'),
+      price: val('price'),
+      paidAt: val('paid-at').replace('T',' '),
+      approval: apYes.checked ? val('approval') : '모름',
+      card4: val('card4')
+    };
+  }
+  function encode(data){ var b=new URLSearchParams(); for(var k in REFUND_FORM.fields) b.append(REFUND_FORM.fields[k], data[k]||''); return b; }
+  function submitUrl(){ return REFUND_FORM.action+'?'+encode(payload()).toString()+'&submit=Submit'; }
+  function showDone(){ form.style.display='none'; done.style.display='block'; done.scrollIntoView({block:'center',behavior:'smooth'}); }
+
+  if(PREVIEW_HOST){
+    submitBtn.hidden=true; submitLink.hidden=false;
+    var syncLink=function(){ submitLink.href=submitUrl(); };
+    form.addEventListener('input',syncLink); form.addEventListener('change',syncLink); syncLink();
+    submitLink.addEventListener('click',function(e){
+      if(!validate()){ e.preventDefault(); return; }
+      submitLink.href=submitUrl();
+      setTimeout(function(){ previewNote.hidden=false; showDone(); },0);
+    });
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!validate()) return;
+    if(PREVIEW_HOST){ submitLink.href=submitUrl(); submitLink.click(); return; }
+    failMsg.style.display='';
+    submitBtn.disabled=true;
+    fetch(REFUND_FORM.action,{method:'POST',mode:'no-cors',body:encode(payload())})
+      .then(function(){ showDone(); }, function(){ failMsg.style.display='block'; })
+      .then(function(){ submitBtn.disabled=false; });
   });
 })();
 </script>
