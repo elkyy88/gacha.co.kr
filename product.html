@@ -312,7 +312,8 @@ p{margin:0}
   });
 
   // ---- 상품 상세: 주소의 #id=... 로 products.js 에서 상품을 찾아 그림 ----
-  var PRODUCTS=window.MC_PRODUCTS||[];
+  // 사진이 있는 상품을 먼저(등록일 최신순) 보여주고, 사진 준비 중인 상품은 맨 뒤로 보냅니다.
+  var PRODUCTS=(function(a){ return a.filter(function(p){return p.img;}).concat(a.filter(function(p){return !p.img;})); })(window.MC_PRODUCTS||[]);
   function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function won(n){ return Number(n).toLocaleString('ko-KR')+'원'; }
   function card(p,i){
@@ -346,8 +347,8 @@ p{margin:0}
       var page=Math.floor(idx/24)+1;
       document.getElementById('back').href='toys.html'+(page>1?'#page='+page:'');
       var prev=idx>0?PRODUCTS[idx-1]:null, next=idx<PRODUCTS.length-1?PRODUCTS[idx+1]:null;
-      pn.innerHTML=(prev?'<a class="prev" href="product.html#id='+encodeURIComponent(prev.id)+'"><span>‹ 더 최근 상품</span><b>'+esc(prev.name)+'</b></a>':'<a class="prev off"></a>')
-                 +(next?'<a class="next" href="product.html#id='+encodeURIComponent(next.id)+'"><span>이전 상품 ›</span><b>'+esc(next.name)+'</b></a>':'<a class="next off"></a>');
+      pn.innerHTML=(prev?'<a class="prev" href="product.html#id='+encodeURIComponent(prev.id)+'"><span>‹ 이전 상품</span><b>'+esc(prev.name)+'</b></a>':'<a class="prev off"></a>')
+                 +(next?'<a class="next" href="product.html#id='+encodeURIComponent(next.id)+'"><span>다음 상품 ›</span><b>'+esc(next.name)+'</b></a>':'<a class="next off"></a>');
     }
     // 최근 등록 상품 5개 (현재 상품 제외)
     var out='', n=0;

@@ -281,7 +281,8 @@ p{margin:0}
   });
 
   // ---- 상품 목록: products.js 의 데이터를 카드로 그리고 24개씩 페이지를 나눔 ----
-  var PRODUCTS=window.MC_PRODUCTS||[], PER=24;
+  // 사진이 있는 상품을 먼저(등록일 최신순) 보여주고, 사진 준비 중인 상품은 맨 뒤로 보냅니다.
+  var PRODUCTS=(function(a){ return a.filter(function(p){return p.img;}).concat(a.filter(function(p){return !p.img;})); })(window.MC_PRODUCTS||[]), PER=24;
   var list=document.getElementById('product-list'), pager=document.getElementById('pager'), range=document.getElementById('range');
   document.getElementById('total').textContent=PRODUCTS.length;
   var pages=Math.max(1,Math.ceil(PRODUCTS.length/PER)), cur=1;
