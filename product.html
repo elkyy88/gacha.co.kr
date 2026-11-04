@@ -344,7 +344,8 @@ p{margin:0}
       if(p.barcode) rows.push(['상품 코드',p.barcode]);
       if(p.date) rows.push(['등록일',p.date]);
       spec.innerHTML=rows.map(function(r){ return '<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>'; }).join('');
-      var page=Math.floor(idx/24)+1;
+      var PHOTO=0; for(var k=0;k<PRODUCTS.length;k++){ if(PRODUCTS[k].img) PHOTO++; }
+      var page = idx<PHOTO ? Math.floor(idx/24)+1 : Math.ceil(PHOTO/24)+Math.floor((idx-PHOTO)/24)+1;  // 목록과 같은 페이지 나누기
       document.getElementById('back').href='toys.html'+(page>1?'#page='+page:'');
       var prev=idx>0?PRODUCTS[idx-1]:null, next=idx<PRODUCTS.length-1?PRODUCTS[idx+1]:null;
       pn.innerHTML=(prev?'<a class="prev" href="product.html#id='+encodeURIComponent(prev.id)+'"><span>‹ 이전 상품</span><b>'+esc(prev.name)+'</b></a>':'<a class="prev off"></a>')

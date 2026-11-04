@@ -285,7 +285,11 @@ p{margin:0}
   var PRODUCTS=(function(a){ return a.filter(function(p){return p.img;}).concat(a.filter(function(p){return !p.img;})); })(window.MC_PRODUCTS||[]), PER=24;
   var list=document.getElementById('product-list'), pager=document.getElementById('pager'), range=document.getElementById('range');
   document.getElementById('total').textContent=PRODUCTS.length;
-  var pages=Math.max(1,Math.ceil(PRODUCTS.length/PER)), cur=1;
+  // 페이지 나누기: 사진 있는 상품을 24개씩 채우고, 사진 준비 중인 상품은 새 페이지에서 시작해 마지막 페이지에 모읍니다.
+  var PHOTO=0; for(var k=0;k<PRODUCTS.length;k++){ if(PRODUCTS[k].img) PHOTO++; }
+  var STARTS=[]; for(var s=0;s<PHOTO;s+=PER) STARTS.push(s); for(var s2=PHOTO;s2<PRODUCTS.length;s2+=PER) STARTS.push(s2);
+  if(!STARTS.length) STARTS.push(0);
+  var pages=STARTS.length, cur=1;
   var variants=['',' navy',' flip'];
   function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function card(p,i){
@@ -295,7 +299,7 @@ p{margin:0}
   }
   function show(n,scroll){
     cur=Math.min(Math.max(1,n),pages);
-    var a=(cur-1)*PER, b=Math.min(cur*PER,PRODUCTS.length), out='';
+    var a=STARTS[cur-1], b=cur<pages?STARTS[cur]:PRODUCTS.length, out='';
     for(var i=a;i<b;i++) out+=card(PRODUCTS[i],i);
     list.innerHTML = out || '<p class="empty">등록된 상품이 없습니다.</p>';
     range.textContent = PRODUCTS.length ? (a+1)+'~'+b+'번째 상품' : '';
