@@ -3,6 +3,7 @@
 // - 새 상품은 이 배열 맨 앞에 같은 형식으로 추가하면 목록 첫 페이지 맨 위에 올라가고 상세 페이지도 자동으로 생깁니다.
 //   id: 다른 상품과 겹치지 않는 값 (등록일시 숫자 등) / name: 상품명 / price: 1개 가격(숫자) / date: 등록일 / maker: 제조사(없으면 "")
 //   barcode, code: 바코드·관리코드(없으면 "") / img: 상품 사진(큰 것) / thumb: 목록용 작은 사진 경로 (아직 없으면 "")
+//   pin: 첫 페이지 고정 순서(1, 2, 3 …) — 최신 상품 6개 바로 다음에 이 순서로 나옵니다. 고정하지 않을 상품은 pin 없음.
 // - 엑셀 파일을 다시 주시면 이 파일을 통째로 다시 만들어 드립니다.  (생성: 2026-11-04, 193종)
 window.MC_PRODUCTS = [
  {
@@ -498,7 +499,8 @@ window.MC_PRODUCTS = [
   "barcode": "902048",
   "code": "400040902048",
   "img": "images/products/20260825122952.jpg",
-  "thumb": "images/products/20260825122952-s.jpg"
+  "thumb": "images/products/20260825122952-s.jpg",
+  "pin": 4
  },
  {
   "id": "20260825122355",
@@ -564,7 +566,8 @@ window.MC_PRODUCTS = [
   "barcode": "098574",
   "code": "400040098574",
   "img": "images/products/20260813164015.jpg",
-  "thumb": "images/products/20260813164015-s.jpg"
+  "thumb": "images/products/20260813164015-s.jpg",
+  "pin": 2
  },
  {
   "id": "20260813163835",
@@ -575,7 +578,8 @@ window.MC_PRODUCTS = [
   "barcode": "901614",
   "code": "400040901614",
   "img": "images/products/20260813163835.jpg",
-  "thumb": "images/products/20260813163835-s.jpg"
+  "thumb": "images/products/20260813163835-s.jpg",
+  "pin": 3
  },
  {
   "id": "20260813163209",
@@ -718,7 +722,8 @@ window.MC_PRODUCTS = [
   "barcode": "098550",
   "code": "400040098550",
   "img": "images/products/20260720154208.jpg",
-  "thumb": "images/products/20260720154208-s.jpg"
+  "thumb": "images/products/20260720154208-s.jpg",
+  "pin": 1
  },
  {
   "id": "20260713151508",
@@ -729,7 +734,8 @@ window.MC_PRODUCTS = [
   "barcode": "099434",
   "code": "400040099434",
   "img": "images/products/20260713151508.jpg",
-  "thumb": "images/products/20260713151508-s.jpg"
+  "thumb": "images/products/20260713151508-s.jpg",
+  "pin": 5
  },
  {
   "id": "20260713150953",
@@ -806,7 +812,8 @@ window.MC_PRODUCTS = [
   "barcode": "094453",
   "code": "600020094453",
   "img": "images/products/20260630094535.jpg",
-  "thumb": "images/products/20260630094535-s.jpg"
+  "thumb": "images/products/20260630094535-s.jpg",
+  "pin": 6
  },
  {
   "id": "20260630093019",

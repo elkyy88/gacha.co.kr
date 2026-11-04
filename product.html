@@ -312,8 +312,13 @@ p{margin:0}
   });
 
   // ---- 상품 상세: 주소의 #id=... 로 products.js 에서 상품을 찾아 그림 ----
-  // 사진이 있는 상품을 먼저(등록일 최신순) 보여주고, 사진 준비 중인 상품은 맨 뒤로 보냅니다.
-  var PRODUCTS=(function(a){ return a.filter(function(p){return p.img;}).concat(a.filter(function(p){return !p.img;})); })(window.MC_PRODUCTS||[]);
+  // 순서: ① 최신 상품 6개 ② 첫 페이지 고정 상품(pin 순서) ③ 나머지 사진 있는 상품(최신순) ④ 사진 준비 중 상품(맨 뒤)
+  var ORDER=(function(a){
+    var pinned=a.filter(function(p){return p.pin;}).sort(function(x,y){return x.pin-y.pin;});
+    var photo=a.filter(function(p){return !p.pin && p.img;}), none=a.filter(function(p){return !p.pin && !p.img;});
+    return {list:photo.slice(0,6).concat(pinned, photo.slice(6), none), main:photo.length+pinned.length};
+  })(window.MC_PRODUCTS||[]);
+  var PRODUCTS=ORDER.list;
   function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function won(n){ return Number(n).toLocaleString('ko-KR')+'원'; }
   function card(p,i){
@@ -344,7 +349,7 @@ p{margin:0}
       if(p.barcode) rows.push(['상품 코드',p.barcode]);
       if(p.date) rows.push(['등록일',p.date]);
       spec.innerHTML=rows.map(function(r){ return '<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>'; }).join('');
-      var PHOTO=0; for(var k=0;k<PRODUCTS.length;k++){ if(PRODUCTS[k].img) PHOTO++; }
+      var PHOTO=ORDER.main;
       var page = idx<PHOTO ? Math.floor(idx/24)+1 : Math.ceil(PHOTO/24)+Math.floor((idx-PHOTO)/24)+1;  // 목록과 같은 페이지 나누기
       document.getElementById('back').href='toys.html'+(page>1?'#page='+page:'');
       var prev=idx>0?PRODUCTS[idx-1]:null, next=idx<PRODUCTS.length-1?PRODUCTS[idx+1]:null;

@@ -281,12 +281,17 @@ p{margin:0}
   });
 
   // ---- 상품 목록: products.js 의 데이터를 카드로 그리고 24개씩 페이지를 나눔 ----
-  // 사진이 있는 상품을 먼저(등록일 최신순) 보여주고, 사진 준비 중인 상품은 맨 뒤로 보냅니다.
-  var PRODUCTS=(function(a){ return a.filter(function(p){return p.img;}).concat(a.filter(function(p){return !p.img;})); })(window.MC_PRODUCTS||[]), PER=24;
+  // 순서: ① 최신 상품 6개 ② 첫 페이지 고정 상품(pin 순서) ③ 나머지 사진 있는 상품(최신순) ④ 사진 준비 중 상품(맨 뒤)
+  var ORDER=(function(a){
+    var pinned=a.filter(function(p){return p.pin;}).sort(function(x,y){return x.pin-y.pin;});
+    var photo=a.filter(function(p){return !p.pin && p.img;}), none=a.filter(function(p){return !p.pin && !p.img;});
+    return {list:photo.slice(0,6).concat(pinned, photo.slice(6), none), main:photo.length+pinned.length};
+  })(window.MC_PRODUCTS||[]);
+  var PRODUCTS=ORDER.list, PER=24;
   var list=document.getElementById('product-list'), pager=document.getElementById('pager'), range=document.getElementById('range');
   document.getElementById('total').textContent=PRODUCTS.length;
   // 페이지 나누기: 사진 있는 상품을 24개씩 채우고, 사진 준비 중인 상품은 새 페이지에서 시작해 마지막 페이지에 모읍니다.
-  var PHOTO=0; for(var k=0;k<PRODUCTS.length;k++){ if(PRODUCTS[k].img) PHOTO++; }
+  var PHOTO=ORDER.main;
   var STARTS=[]; for(var s=0;s<PHOTO;s+=PER) STARTS.push(s); for(var s2=PHOTO;s2<PRODUCTS.length;s2+=PER) STARTS.push(s2);
   if(!STARTS.length) STARTS.push(0);
   var pages=STARTS.length, cur=1;
