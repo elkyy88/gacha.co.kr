@@ -6,14 +6,14 @@
 <title>캡슐토이 — 미디어캡슐</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
 <style>
 /* 레이아웃: 캡슐 선반 — 메인 페이지와 같은 띠 구조. 색·글꼴 토큰은 메인 페이지와 동일하게 유지. */
 :root{
-  --bg:#F3F5F9; --surface:#FFFFFF; --fg:#1B2A4A; --muted:#5C6678; --line:#DFE4EC;
-  --brand:#1B2A4A; --brand-ink:#1B2A4A; --brand-soft:#E8ECF4; --brand-deep:#121D33;
-  --accent:#FF6B35; --accent-deep:#E4551F; --accent-soft:#FFEDE4; --accent-line:#FFD8C6; --on-accent:#FFFFFF;
-  --hero-fg:#FFFFFF; --cap-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231B2A4A'/%3E%3Cpath d='M7 32a25 25 0 0 1 50 0z' fill='%23FFFFFF'/%3E%3Cpath d='M7 32a25 25 0 0 0 50 0z' fill='%23FF6B35'/%3E%3Crect x='7' y='29.5' width='50' height='5' fill='%231B2A4A'/%3E%3C/svg%3E");
+  --bg:#FBF8F3; --surface:#FFFFFF; --fg:#14213D; --muted:#5F6878; --line:#E6DED1;
+  --brand:#14213D; --brand-ink:#14213D; --brand-soft:#F2ECE2; --brand-deep:#0D1629;
+  --accent:#D62839; --accent-deep:#B81F2E; --accent-soft:#FBE6E8; --accent-line:#F2C4C9; --on-accent:#FFFFFF;
+  --hero-fg:#FFFFFF; --cap-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2314213D'/%3E%3Cpath d='M7 32a25 25 0 0 1 50 0z' fill='%23D62839'/%3E%3Cpath d='M7 32a25 25 0 0 0 50 0z' fill='%23FBF8F3'/%3E%3Crect x='7' y='29.5' width='50' height='5' fill='%2314213D'/%3E%3C/svg%3E");
   --font-display:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --font-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --font-logo:"Montserrat","Noto Sans KR",Arial,sans-serif;
@@ -46,11 +46,11 @@ p{margin:0}
 
 /* 버튼 */
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--font-body);font-size:15px;line-height:1.2}
-.btn-primary{background:var(--accent);color:#FFFFFF;border-color:var(--accent)}
+.btn-primary{background:var(--accent);color:#FBF8F3;border-color:var(--accent)}
 .btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
 .btn-ghost{background:transparent;color:var(--hero-fg);border-color:rgba(255,255,255,.65)}
 .btn-ghost:hover{background:rgba(255,255,255,.12)}
-.btn-brand{background:var(--brand);color:#FFFFFF;border-color:var(--brand)}
+.btn-brand{background:var(--brand);color:#FBF8F3;border-color:var(--brand)}
 .btn-brand:hover{filter:brightness(1.12)}
 .btn-outline{background:transparent;color:var(--brand-ink);border-color:var(--brand-ink)}
 .btn-outline:hover{background:var(--brand-soft)}
@@ -63,7 +63,7 @@ p{margin:0}
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px}
 .nav a{display:block;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;color:var(--brand-ink)}
 .nav a:hover,.nav a:focus-visible,.nav a[aria-current="page"]{background:var(--brand-soft);color:var(--brand-ink)}
-.nav .cta a{background:var(--brand);color:#FFFFFF;font-weight:700}
+.nav .cta a{background:var(--brand);color:#FBF8F3;font-weight:700}
 .nav li.cta+li.cta{margin-left:4px}
 .nav .cta a:hover{background:var(--brand);filter:brightness(1.12)}
 .menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line);background:var(--surface);border-radius:12px;color:var(--fg);cursor:pointer;align-items:center;justify-content:center}
@@ -78,14 +78,14 @@ p{margin:0}
   .nav li{grid-column:span 2}
   .nav a{text-align:center;padding:9px 4px;font-size:14px;font-weight:600;background:var(--brand-soft);color:var(--brand-ink);white-space:nowrap}
   .nav a[aria-current="page"]{box-shadow:0 0 0 2px var(--brand-ink) inset}
-  .nav .cta a{background:var(--brand);color:#FFFFFF}
+  .nav .cta a{background:var(--brand);color:#FBF8F3}
 }
 
 /* 캡슐 그림 (로고 모티프) */
 .cap-ico{width:40px;height:40px;display:block;flex:none}
 .cap-ico.sm{width:18px;height:18px}
-.cap-ico.navy{--cap-bottom:#1B2A4A}
-.cap-ico.flip{--cap-top:#FF6B35;--cap-bottom:#FFFFFF}
+.cap-ico.navy{--cap-top:#14213D;--cap-bottom:#FBF8F3}
+.cap-ico.flip{--cap-top:#FBF8F3;--cap-bottom:#D62839}
 .cap{transform-box:fill-box;transform-origin:center}
 @media (prefers-reduced-motion:no-preference){
   .cap{animation:float 6s ease-in-out infinite}
@@ -94,11 +94,11 @@ p{margin:0}
 }
 
 /* 페이지 머리: 남색 바탕 + 흰 글씨 + 주황 포인트, 오른쪽에 떠다니는 캡슐 */
-.page-hero{background:var(--brand);color:var(--hero-fg);overflow:hidden;--mc-ink:#FFFFFF}
+.page-hero{background:var(--brand);color:var(--hero-fg);overflow:hidden;--mc-ink:#FBF8F3}
 .page-hero .wrap{padding-block:52px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
 .page-hero .txt{display:grid;gap:14px;min-width:0}
 .page-hero .eyebrow{color:var(--accent)}
-.page-hero h1{font-size:clamp(32px,4.6vw,52px);color:#FFFFFF}
+.page-hero h1{font-size:clamp(32px,4.6vw,52px);color:#FBF8F3}
 .page-hero p{max-width:52ch;opacity:.92;font-size:17px}
 .page-hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
 .page-hero .caps{width:230px;height:auto;display:block}
@@ -107,7 +107,7 @@ p{margin:0}
 /* 상품 */
 .products{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
 .product{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0;display:grid;grid-template-rows:auto 1fr;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
-.product:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(27,42,74,.12);border-color:#CBD3E1}
+.product:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,33,61,.12);border-color:#E0D5C5}
 .product .ph{position:relative;aspect-ratio:1/1.15;max-width:100%;background:var(--brand-soft);display:grid;place-items:center;color:var(--muted);font-size:12px;text-align:center;padding:12px;border-bottom:1px dashed var(--line)}
 .product .ph .cap-ico{width:40px;height:40px;margin:0 auto 8px}
 .product .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#FFFFFF}
@@ -120,7 +120,7 @@ p{margin:0}
 .pager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-top:32px}
 .pager button{min-width:40px;height:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font:inherit;font-size:14px;font-weight:700;color:var(--brand-ink);cursor:pointer}
 .pager button:hover{background:var(--brand-soft)}
-.pager button[aria-current="page"]{background:var(--brand);color:#FFFFFF;border-color:var(--brand)}
+.pager button[aria-current="page"]{background:var(--brand);color:#FBF8F3;border-color:var(--brand)}
 .pager button:disabled{opacity:.35;cursor:default;background:var(--surface)}
 .pager .gap{color:var(--muted);padding:0 2px}
 .empty{padding:40px 0;color:var(--muted)}
@@ -131,7 +131,7 @@ p{margin:0}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
 
 /* 푸터 */
-.site-footer{background:var(--brand);color:#FFFFFF;padding-block:48px 56px;overflow:hidden}
+.site-footer{background:var(--brand);color:#FBF8F3;padding-block:48px 56px;overflow:hidden}
 .site-footer .wrap{display:grid;gap:22px;position:relative}
 .site-footer .logo{background:#FFFFFF;padding:8px 14px;border-radius:14px;width:max-content;max-width:100%}
 .site-footer .logo img{height:46px}
@@ -147,7 +147,124 @@ p{margin:0}
 @media (max-width:640px){ .site-footer .info span{display:block} .site-footer .info .sep{display:none} .site-footer .info{gap:8px} }
 
 /* 안내 토스트 */
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:#FFFFFF;padding:12px 18px;border-radius:999px;font-size:14px;z-index:40;max-width:calc(100% - 32px);text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:#FBF8F3;padding:12px 18px;border-radius:999px;font-size:14px;z-index:40;max-width:calc(100% - 32px);text-align:center}
+
+/* =====================================================================
+   디자인: 회사 소개서 컨셉 — 크림 바탕 · 네이비 · 레드, 제목은 Black Han Sans
+   (위의 규칙보다 뒤에 있어서 이 블록이 우선 적용됨)
+   ===================================================================== */
+:root{
+  --bg:#FBF8F3; --surface:#FFFDF8; --tint:#F2ECE2; --fg:#14213D; --body:#4A5568; --muted:#5F6878; --line:#E6DED1;
+  --brand:#14213D; --brand-ink:#14213D; --brand-2:#22335A; --brand-soft:#F2ECE2; --brand-deep:#0D1629;
+  --brand-mid:#D62839; --brand-light:#E0D5C5;
+  --accent:#D62839; --accent-deep:#B81F2E; --accent-pop:#FF7A85; --accent-soft:#FBE6E8; --accent-line:#F2C4C9; --on-accent:#FBF8F3;
+  --cream:#FBF8F3; --mist:#C9D3E3; --muted-dark:#8E9BB8; --hero-fg:#FBF8F3; --warn-bg:#FBE6E8; --warn-ink:#B81F2E;
+  --font-display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-logo:"Black Han Sans","Noto Sans KR",Arial,sans-serif;
+}
+body{background:var(--bg);color:var(--fg)}
+h1,h2,h3{font-weight:400;letter-spacing:0;line-height:1.3;font-synthesis:none}
+.lead{color:var(--body)}
+.note{color:var(--muted)}
+.eyebrow{font-family:var(--font-body);font-size:15px;font-weight:700;letter-spacing:.18em;text-transform:none;color:var(--accent-deep);gap:0}
+.eyebrow::before{display:none}
+.band.tint{background:var(--tint);border-color:var(--line)}
+.band.tint .card,.band.tint .step,.band.tint .machine,.band.tint .store,.band.tint .area,.band.tint .sites li,.band.tint .tl,.band.tint .chip{background:var(--surface)}
+@media (max-width:640px){ td:first-child{font-weight:400} }
+
+/* 머리글 */
+.site-header{background:var(--surface);border-bottom:1px solid var(--line)}
+.logo img{height:44px}
+.nav a{color:var(--brand-ink)}
+.nav a:hover,.nav a:focus-visible,.nav a[aria-current="page"]{background:var(--tint);color:var(--brand-ink)}
+.nav .cta a,.nav .cta a:hover{background:var(--accent);color:var(--cream);filter:none}
+.nav .cta a:hover{background:var(--accent-deep)}
+@media (max-width:860px){ .logo img{height:36px} .nav .cta a{background:var(--accent);color:var(--cream)} }
+
+/* 버튼 */
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--cream)}
+.btn-primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn-brand{background:var(--brand);border-color:var(--brand);color:var(--cream)}
+.btn-brand:hover{filter:none;background:var(--brand-2);border-color:var(--brand-2)}
+.btn-outline{background:transparent;color:var(--brand-ink);border-color:var(--brand-ink)}
+.btn-outline:hover{background:var(--tint)}
+.btn-ghost{color:var(--cream);border-color:rgba(251,248,243,.6)}
+.btn-ghost:hover{background:rgba(251,248,243,.1)}
+
+/* 남색 띠: 대문 · 페이지 머리 (소개서 표지) */
+.hero,.page-hero{background:var(--brand);color:var(--cream);--cap-ink:#E9E0D2;--mc-ink:#FBF8F3}
+.hero .eyebrow,.page-hero .eyebrow{color:var(--accent-pop)}
+.hero h1,.page-hero h1{color:var(--cream)}
+.hero h1 em{color:var(--accent-pop)}
+.hero p,.page-hero p{color:var(--mist);opacity:1}
+
+/* 카드 공통 */
+.card,.step,.machine,.store,.panel,.form,.done,.tl,.faq details,.chip,.partner-grid li,.table-wrap,.prevnext a,.product,.radio{background:var(--surface);border-color:var(--line)}
+.card p,.step p,.machine p,.tl p,.faq details p{color:var(--body)}
+.card h3,.step h3,.machine h3,.tl h3{color:var(--brand-ink)}
+.step{border-top:6px solid var(--accent)}
+.step .num{font-family:var(--font-body);font-weight:700;letter-spacing:.16em;color:var(--accent-deep)}
+.step .num b{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:400;font-size:15px;font-synthesis:none}
+.step li,.machine li{background:var(--tint);color:var(--brand-ink)}
+.tl::before{background:var(--brand);color:var(--cream);font-weight:400}
+th{background:var(--tint);color:var(--brand-ink)}
+.photo,.ph{background:var(--tint)}
+.photo figcaption{background:rgba(20,33,61,.86);color:var(--cream)}
+
+/* 매장 목록 */
+.store h3{font-family:var(--font-body);font-weight:700;font-size:18px}
+.store h3 a{text-decoration-color:var(--line)}
+.store h3 a:hover{text-decoration-color:var(--accent)}
+.store-filter .chip{background:var(--surface);border-color:var(--line)}
+.store-filter .chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--cream)}
+.store-filter .chip[aria-pressed="true"] span{color:rgba(251,248,243,.75)}
+
+/* 빨간 띠: 문의 · 환불 (소개서의 연락처 장) */
+.cta-band,.band.refund{background:var(--accent);border:0;color:var(--cream)}
+.cta-band .eyebrow,.band.refund .eyebrow,.cta-band h2,.band.refund h2,.cta-band .lead,.band.refund .lead{color:var(--cream)}
+.cta-band .btn-brand,.band.refund .btn-brand{background:var(--brand);border-color:var(--brand);color:var(--cream)}
+.cta-band .btn-outline{color:var(--cream);border-color:rgba(251,248,243,.85)}
+.cta-band .btn-outline:hover{background:rgba(251,248,243,.12)}
+.band.refund .card{background:var(--surface);border-color:transparent;color:var(--fg)}
+.band.refund .card p{color:var(--body)}
+.band.refund .card .note{color:var(--muted)}
+.band.refund .card .btn-primary{background:var(--brand);border-color:var(--brand)}
+.band.refund .card .btn-primary:hover{background:var(--brand-2);border-color:var(--brand-2)}
+
+/* 푸터 */
+.site-footer{background:var(--brand);color:var(--cream);--cap-ink:#E9E0D2}
+.site-footer .logo{background:none;padding:0;border-radius:0}
+.site-footer .logo img{height:40px}
+.site-footer .info{color:var(--mist);opacity:1}
+.site-footer .links a{color:var(--cream)}
+.site-footer .copy{font-family:var(--font-body);font-weight:700;letter-spacing:.16em;color:var(--muted-dark);opacity:1}
+.toast{background:var(--brand);color:var(--cream)}
+
+/* 상품 (캡슐토이 · 상품 상세) */
+.product h3{font-family:var(--font-body);font-weight:700}
+.product .price,.detail .price{color:var(--accent)}
+.product:hover{box-shadow:0 10px 24px rgba(20,33,61,.12);border-color:#D8CCBA}
+.product .ph{background:var(--tint)}
+.pager button{background:var(--surface);border-color:var(--line)}
+.pager button:hover{background:var(--tint)}
+.pager button[aria-current="page"]{background:var(--brand);border-color:var(--brand);color:var(--cream)}
+.pager button:disabled{background:var(--surface)}
+.detail .photo{background:var(--tint)}
+.prevnext span{color:var(--accent-deep)}
+
+/* 환불 문의 양식 */
+.control{background:var(--surface);border-color:var(--line)}
+.control:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.seg{background:var(--tint)}
+.seg input:checked+span{background:var(--surface);box-shadow:0 0 0 1.5px var(--accent) inset}
+.radio:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.panel.soft,.callout{background:var(--tint);border-color:var(--line)}
+.panel li::before{color:var(--accent)}
+.help{background:var(--bg);border-color:var(--line)}
+.modal-box .art{background:var(--tint)}
+/* 보완: 빨간 띠 안의 작은 글씨, 자주 묻는 질문 +/− 표시 */
+.cta-band .note,.cta-band .note a{color:var(--cream)}
+.faq summary::after{font-family:var(--font-body);font-weight:700;font-size:22px;line-height:1;color:var(--accent)}
 </style>
 </head>
 <body>
@@ -156,31 +273,31 @@ p{margin:0}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="cap" viewBox="0 0 64 64">
-      <circle cx="32" cy="32" r="30" fill="var(--cap-ink,#1B2A4A)"/>
-      <path d="M7 32a25 25 0 0 1 50 0z" fill="var(--cap-top,#FFFFFF)"/>
-      <path d="M7 32a25 25 0 0 0 50 0z" fill="var(--cap-bottom,#FF6B35)"/>
-      <rect x="7" y="29.5" width="50" height="5" fill="var(--cap-ink,#1B2A4A)"/>
+      <circle cx="32" cy="32" r="30" fill="var(--cap-ink,#14213D)"/>
+      <path d="M7 32a25 25 0 0 1 50 0z" fill="var(--cap-top,#D62839)"/>
+      <path d="M7 32a25 25 0 0 0 50 0z" fill="var(--cap-bottom,#FBF8F3)"/>
+      <rect x="7" y="29.5" width="50" height="5" fill="var(--cap-ink,#14213D)"/>
     </symbol>
     <symbol id="machine" viewBox="0 0 320 480">
-      <circle cx="160" cy="150" r="132" fill="var(--mc-glass,#FFFFFF)" stroke="var(--mc-ink,#1B2A4A)" stroke-width="16"/>
-      <ellipse cx="96" cy="74" rx="15" ry="30" transform="rotate(-35 96 74)" fill="var(--mc-hl,#E8ECF4)"/>
+      <circle cx="160" cy="150" r="132" fill="var(--mc-glass,#FBF8F3)" stroke="var(--mc-ink,#14213D)" stroke-width="16"/>
+      <ellipse cx="96" cy="74" rx="15" ry="30" transform="rotate(-35 96 74)" fill="var(--mc-hl,#F2ECE2)"/>
       <use href="#cap" x="122" y="86" width="62" height="62"/>
       <use href="#cap" x="182" y="122" width="58" height="58"/>
       <use href="#cap" x="78" y="140" width="62" height="62"/>
       <use href="#cap" x="140" y="178" width="62" height="62"/>
-      <rect x="16" y="270" width="288" height="38" rx="15" fill="var(--mc-ink,#1B2A4A)"/>
-      <rect x="40" y="304" width="240" height="166" rx="30" fill="var(--mc-ink,#1B2A4A)"/>
-      <rect x="58" y="320" width="204" height="132" rx="20" fill="var(--mc-body,#FF6B35)"/>
+      <rect x="16" y="270" width="288" height="38" rx="15" fill="var(--mc-ink,#14213D)"/>
+      <rect x="40" y="304" width="240" height="166" rx="30" fill="var(--mc-ink,#14213D)"/>
+      <rect x="58" y="320" width="204" height="132" rx="20" fill="var(--mc-body,#D62839)"/>
       <circle cx="160" cy="368" r="40" fill="#FFFFFF"/>
       <use href="#cap" x="134" y="342" width="52" height="52"/>
-      <rect x="104" y="424" width="112" height="16" rx="8" fill="var(--mc-slot,#D9532B)"/>
+      <rect x="104" y="424" width="112" height="16" rx="8" fill="var(--mc-slot,#B81F2E)"/>
     </symbol>
   </defs>
 </svg>
 
 <header class="site-header">
   <div class="wrap">
-    <a class="logo" href="index.html" aria-label="미디어캡슐 홈으로"><img src="images/logo.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
+    <a class="logo" href="index.html" aria-label="미디어캡슐 홈으로"><img src="images/logo-main.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
     <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="메뉴 열기">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -211,9 +328,9 @@ p{margin:0}
       </div>
       <svg class="caps" viewBox="0 0 230 190" aria-hidden="true">
         <use class="cap" href="#cap" x="14" y="16" width="70" height="70"/>
-        <use class="cap" href="#cap" x="112" y="0" width="48" height="48" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+        <use class="cap" href="#cap" x="112" y="0" width="48" height="48" style="--cap-top:#FBF8F3;--cap-bottom:#FF7A85"/>
         <use class="cap" href="#cap" x="150" y="64" width="64" height="64"/>
-        <use class="cap" href="#cap" x="56" y="104" width="86" height="86" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+        <use class="cap" href="#cap" x="56" y="104" width="86" height="86" style="--cap-top:#FBF8F3;--cap-bottom:#FF7A85"/>
         <use class="cap" href="#cap" x="4" y="120" width="40" height="40"/>
       </svg>
     </div>
@@ -247,10 +364,10 @@ p{margin:0}
   <div class="wrap">
     <svg class="deco" viewBox="0 0 160 120" aria-hidden="true">
       <use class="cap" href="#cap" x="0" y="30" width="56" height="56"/>
-      <use class="cap" href="#cap" x="70" y="0" width="44" height="44" style="--cap-top:#FF6B35;--cap-bottom:#FFFFFF"/>
+      <use class="cap" href="#cap" x="70" y="0" width="44" height="44" style="--cap-top:#FBF8F3;--cap-bottom:#FF7A85"/>
       <use class="cap" href="#cap" x="104" y="56" width="52" height="52"/>
     </svg>
-    <a class="logo" href="index.html" aria-label="미디어캡슐"><img src="images/logo.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
+    <a class="logo" href="index.html" aria-label="미디어캡슐"><img src="images/logo-main-light.png" alt="MEDIA CAPSULE 미디어캡슐"></a>
     <div class="info">
       <div><span>(주)미디어캡슐</span><span class="sep">|</span><span>대표: 정태선</span><span class="sep">|</span><span>주소: 경상남도 양산시 상북면 소석1길 11-1</span></div>
       <div><span>사업자등록번호: 607-10-88688</span><span class="sep">|</span><span>대표번호: <a href="tel:15661622" style="color:inherit;text-decoration:none">1566-1622</a></span><span class="sep">|</span><span>이메일: <a href="mailto:elkyy@naver.com" style="color:inherit;text-decoration:none">elkyy@naver.com</a></span></div>
