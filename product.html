@@ -76,7 +76,6 @@ p{margin:0}
   .nav{width:100%}
   .nav ul{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
   .nav li{grid-column:span 2}
-  .nav li:nth-child(n+4){grid-column:span 3}
   .nav a{text-align:center;padding:9px 4px;font-size:14px;font-weight:600;background:var(--brand-soft);color:var(--brand-ink);white-space:nowrap}
   .nav a[aria-current="page"]{box-shadow:0 0 0 2px var(--brand-ink) inset}
   .nav .cta a{background:var(--brand);color:#FFFFFF}
@@ -218,6 +217,7 @@ p{margin:0}
     </button>
     <nav class="nav" id="nav" aria-label="주요 메뉴">
       <ul>
+        <li><a href="about.html">회사소개</a></li>
         <li><a href="machines.html">캡슐머신</a></li>
         <li><a href="toys.html" aria-current="page">캡슐토이</a></li>
         <li><a href="business.html">창업 안내</a></li>
@@ -288,6 +288,7 @@ p{margin:0}
     </div>
     <div class="links">
       <a href="#" data-form="privacy">개인정보처리방침</a>
+      <a href="about.html">회사소개</a>
       <a href="business.html">창업 안내</a>
       <a href="refund.html">환불 문의</a>
     </div>
