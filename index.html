@@ -392,13 +392,23 @@ th{background:var(--tint);color:var(--brand-ink)}
 .swipe-hint{display:none}
 @media (max-width:640px){ .swipe-hint{display:flex} }
 
-/* 사업 영역: 제목 오른쪽에 창업 문의 버튼 */
-.section-head.head-row{max-width:none;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px}
-.section-head.head-row .head-txt{max-width:640px;min-width:0}
-.section-head.head-row .btn{flex:none;margin-bottom:6px}
+/* 사업 영역: 제목 바로 옆에 붙는 창업 문의 (남색 알약 + 캡슐 그림) */
+.section-head.has-ask{max-width:none}
+.head-line{margin:8px 0 12px}
+.head-line h2{display:inline;margin:0;vertical-align:middle}
+.ask-pill{display:inline-flex;align-items:center;gap:8px;vertical-align:middle;margin-left:14px;position:relative;top:-4px;height:42px;padding:0 16px 0 10px;
+  border-radius:999px;background:var(--brand);color:var(--cream);font-size:15px;font-weight:700;line-height:1;text-decoration:none;white-space:nowrap;
+  box-shadow:0 6px 16px rgba(20,33,61,.18);transition:background .15s,transform .15s}
+.ask-pill:hover{background:var(--brand-2);transform:translateY(-1px)}
+.ask-pill .cap-ico{width:24px;height:24px;--cap-ink:#E9E0D2}
+.ask-pill .arr{color:var(--accent-pop);font-weight:800;margin-left:1px}
 .m-br{display:none}
-@media (max-width:640px){ .m-br{display:inline} }
-@media (max-width:640px){ .section-head.head-row{flex-wrap:nowrap;gap:12px} .section-head.head-row .head-txt{flex:1} .section-head.head-row .btn{margin-bottom:4px;padding:9px 15px;font-size:14px} }
+@media (max-width:640px){
+  .m-br{display:inline}
+  .head-line{margin:6px 0 10px}
+  .ask-pill{height:36px;font-size:14px;gap:6px;margin-left:10px;padding:0 13px 0 8px;top:-3px}
+  .ask-pill .cap-ico{width:20px;height:20px}
+}
 </style>
 <style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -513,12 +523,9 @@ th{background:var(--tint);color:var(--brand-ink)}
 
   <section class="band tint" id="business">
     <div class="wrap">
-      <div class="section-head head-row">
-        <div class="head-txt">
-          <span class="eyebrow">사업 영역</span>
-          <h2>세 가지 방식으로<br class="m-br"> 함께합니다</h2>
-        </div>
-        <a class="btn btn-primary" href="business.html#contact">창업 문의</a>
+      <div class="section-head has-ask">
+        <span class="eyebrow">사업 영역</span>
+        <div class="head-line"><h2>세 가지 방식으로<br class="m-br"> 함께합니다</h2><a class="ask-pill" href="business.html#contact"><svg class="cap-ico" aria-hidden="true"><use href="#cap"/></svg>창업 문의<span class="arr" aria-hidden="true">→</span></a></div>
       </div>
       <div class="areas m-swipe">
         <article class="area">
