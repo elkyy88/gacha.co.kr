@@ -7,7 +7,7 @@
 <meta name="description" content="2002년 설립, 25년 캡슐토이 전문 기업 (주)미디어캡슐 — 정품 가챠 도매, 가챠머신 위탁 설치, 가챠샵 창업">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
 <style>
 /* 회사소개: 회사 소개서(슬라이드)의 내용을 홈페이지와 같은 띠 구조로 옮김. 색·글꼴 토큰은 메인 페이지와 동일. */
 :root{
@@ -211,7 +211,7 @@ p{margin:0}
 
 
 /* =====================================================================
-   디자인: 회사 소개서 컨셉 — 크림 바탕 · 네이비 · 레드, 제목은 Black Han Sans
+   디자인: 회사 소개서 컨셉 — 크림 바탕 · 네이비 · 레드, 제목은 Noto Sans KR 굵은체
    (위의 규칙보다 뒤에 있어서 이 블록이 우선 적용됨)
    ===================================================================== */
 :root{
@@ -220,18 +220,18 @@ p{margin:0}
   --brand-mid:#D62839; --brand-light:#E0D5C5;
   --accent:#D62839; --accent-deep:#B81F2E; --accent-pop:#FF7A85; --accent-soft:#FBE6E8; --accent-line:#F2C4C9; --on-accent:#FBF8F3;
   --cream:#FBF8F3; --mist:#C9D3E3; --muted-dark:#8E9BB8; --hero-fg:#FBF8F3; --warn-bg:#FBE6E8; --warn-ink:#B81F2E;
-  --font-display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --font-logo:"Black Han Sans","Noto Sans KR",Arial,sans-serif;
+  --font-display:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-logo:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 body{background:var(--bg);color:var(--fg)}
-h1,h2,h3{font-weight:400;letter-spacing:0;line-height:1.3;font-synthesis:none}
+h1,h2,h3{font-weight:800;letter-spacing:-.01em;line-height:1.3}
 .lead{color:var(--body)}
 .note{color:var(--muted)}
 .eyebrow{font-family:var(--font-body);font-size:15px;font-weight:700;letter-spacing:.18em;text-transform:none;color:var(--accent-deep);gap:0}
 .eyebrow::before{display:none}
 .band.tint{background:var(--tint);border-color:var(--line)}
 .band.tint .card,.band.tint .step,.band.tint .machine,.band.tint .store,.band.tint .area,.band.tint .sites li,.band.tint .tl,.band.tint .chip{background:var(--surface)}
-@media (max-width:640px){ td:first-child{font-weight:400} }
+@media (max-width:640px){ td:first-child{font-weight:800} }
 
 /* 머리글 */
 .site-header{background:var(--surface);border-bottom:1px solid var(--line)}
@@ -265,9 +265,9 @@ h1,h2,h3{font-weight:400;letter-spacing:0;line-height:1.3;font-synthesis:none}
 .card h3,.step h3,.machine h3,.tl h3{color:var(--brand-ink)}
 .step{border-top:6px solid var(--accent)}
 .step .num{font-family:var(--font-body);font-weight:700;letter-spacing:.16em;color:var(--accent-deep)}
-.step .num b{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:400;font-size:15px;font-synthesis:none}
+.step .num b{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:800;font-size:15px;font-synthesis:none}
 .step li,.machine li{background:var(--tint);color:var(--brand-ink)}
-.tl::before{background:var(--brand);color:var(--cream);font-weight:400}
+.tl::before{background:var(--brand);color:var(--cream);font-weight:800}
 th{background:var(--tint);color:var(--brand-ink)}
 .photo,.ph{background:var(--tint)}
 .photo figcaption{background:rgba(20,33,61,.86);color:var(--cream)}
@@ -326,8 +326,8 @@ th{background:var(--tint);color:var(--brand-ink)}
 
 /* 회사소개: 소개서 각 장과 같은 카드 모양 */
 .stat{background:var(--tint);border:0}
-.stat .num{font-family:var(--font-display);font-weight:400;color:var(--accent);font-synthesis:none}
-.stat .num small{font-family:var(--font-display);font-weight:400;color:var(--brand-ink)}
+.stat .num{font-family:var(--font-display);font-weight:800;color:var(--accent);font-synthesis:none}
+.stat .num small{font-family:var(--font-display);font-weight:800;color:var(--brand-ink)}
 .stat .label{color:var(--brand-ink);font-weight:500}
 .journey li{border-top:6px solid var(--accent)}
 .journey .tag{font-family:var(--font-body);font-weight:700;color:var(--accent-deep);opacity:1;letter-spacing:.14em}
@@ -335,16 +335,16 @@ th{background:var(--tint);color:var(--brand-ink)}
 .band.navy{background:var(--brand);--cap-ink:#E9E0D2}
 .band.navy .eyebrow{color:var(--accent-pop)}
 .feature{background:var(--brand-2);border:0}
-.feature .no{background:none;width:auto;height:auto;display:block;color:var(--accent-pop);font-family:var(--font-display);font-weight:400;font-size:26px;line-height:1;font-synthesis:none}
+.feature .no{background:none;width:auto;height:auto;display:block;color:var(--accent-pop);font-family:var(--font-display);font-weight:800;font-size:26px;line-height:1;font-synthesis:none}
 .feature h3{color:var(--cream)}
 .feature p{color:var(--mist)}
 .area{background:var(--surface);border:2px solid var(--line)}
-.area .badge{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:400;font-size:15px;letter-spacing:.04em;padding:6px 14px;font-synthesis:none}
+.area .badge{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.04em;padding:6px 14px;font-synthesis:none}
 .area p{color:var(--body)}
 .area .fit{color:var(--accent-deep);border-top:2px solid var(--line)}
 .area .fit::before{display:none}
 .flow li{background:var(--surface);border:0}
-.flow .n{background:none;width:auto;height:auto;display:block;justify-self:start;color:var(--accent);font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1;font-synthesis:none}
+.flow .n{background:none;width:auto;height:auto;display:block;justify-self:start;color:var(--accent);font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1;font-synthesis:none}
 .flow p{color:var(--body)}
 .ship{background:var(--brand)}
 .band.navy .sites li{background:var(--brand-2);border:0;color:var(--cream)}
@@ -352,7 +352,7 @@ th{background:var(--tint);color:var(--brand-ink)}
 .band.navy .btn-outline{color:var(--cream);border-color:rgba(251,248,243,.75)}
 .band.navy .btn-outline:hover{background:rgba(251,248,243,.1)}
 .contact-card{border:0}
-.contact-card .co{font-family:var(--font-display);font-weight:400;font-size:22px}
+.contact-card .co{font-family:var(--font-display);font-weight:800;font-size:22px}
 .contact-card dt{color:var(--accent-deep)}
 .contact-card dd a{border-bottom-color:var(--line)}
 /* 보완: 빨간 띠 안의 작은 글씨, 자주 묻는 질문 +/− 표시 */

@@ -6,7 +6,7 @@
 <title>상품 상세 — 미디어캡슐</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
 <style>
 /* 레이아웃: 캡슐 선반 — 메인 페이지와 같은 띠 구조. 색·글꼴 토큰은 메인 페이지와 동일하게 유지. */
 :root{
@@ -181,7 +181,7 @@ p{margin:0}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:#FBF8F3;padding:12px 18px;border-radius:999px;font-size:14px;z-index:40;max-width:calc(100% - 32px);text-align:center}
 
 /* =====================================================================
-   디자인: 회사 소개서 컨셉 — 크림 바탕 · 네이비 · 레드, 제목은 Black Han Sans
+   디자인: 회사 소개서 컨셉 — 크림 바탕 · 네이비 · 레드, 제목은 Noto Sans KR 굵은체
    (위의 규칙보다 뒤에 있어서 이 블록이 우선 적용됨)
    ===================================================================== */
 :root{
@@ -190,18 +190,18 @@ p{margin:0}
   --brand-mid:#D62839; --brand-light:#E0D5C5;
   --accent:#D62839; --accent-deep:#B81F2E; --accent-pop:#FF7A85; --accent-soft:#FBE6E8; --accent-line:#F2C4C9; --on-accent:#FBF8F3;
   --cream:#FBF8F3; --mist:#C9D3E3; --muted-dark:#8E9BB8; --hero-fg:#FBF8F3; --warn-bg:#FBE6E8; --warn-ink:#B81F2E;
-  --font-display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --font-logo:"Black Han Sans","Noto Sans KR",Arial,sans-serif;
+  --font-display:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-logo:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 body{background:var(--bg);color:var(--fg)}
-h1,h2,h3{font-weight:400;letter-spacing:0;line-height:1.3;font-synthesis:none}
+h1,h2,h3{font-weight:800;letter-spacing:-.01em;line-height:1.3}
 .lead{color:var(--body)}
 .note{color:var(--muted)}
 .eyebrow{font-family:var(--font-body);font-size:15px;font-weight:700;letter-spacing:.18em;text-transform:none;color:var(--accent-deep);gap:0}
 .eyebrow::before{display:none}
 .band.tint{background:var(--tint);border-color:var(--line)}
 .band.tint .card,.band.tint .step,.band.tint .machine,.band.tint .store,.band.tint .area,.band.tint .sites li,.band.tint .tl,.band.tint .chip{background:var(--surface)}
-@media (max-width:640px){ td:first-child{font-weight:400} }
+@media (max-width:640px){ td:first-child{font-weight:800} }
 
 /* 머리글 */
 .site-header{background:var(--surface);border-bottom:1px solid var(--line)}
@@ -235,9 +235,9 @@ h1,h2,h3{font-weight:400;letter-spacing:0;line-height:1.3;font-synthesis:none}
 .card h3,.step h3,.machine h3,.tl h3{color:var(--brand-ink)}
 .step{border-top:6px solid var(--accent)}
 .step .num{font-family:var(--font-body);font-weight:700;letter-spacing:.16em;color:var(--accent-deep)}
-.step .num b{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:400;font-size:15px;font-synthesis:none}
+.step .num b{background:var(--brand);color:var(--cream);font-family:var(--font-display);font-weight:800;font-size:15px;font-synthesis:none}
 .step li,.machine li{background:var(--tint);color:var(--brand-ink)}
-.tl::before{background:var(--brand);color:var(--cream);font-weight:400}
+.tl::before{background:var(--brand);color:var(--cream);font-weight:800}
 th{background:var(--tint);color:var(--brand-ink)}
 .photo,.ph{background:var(--tint)}
 .photo figcaption{background:rgba(20,33,61,.86);color:var(--cream)}

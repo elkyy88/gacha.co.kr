@@ -29,7 +29,7 @@
     '.iq-close svg{width:20px;height:20px}',
     '.iq-view[hidden]{display:none}',
     '.iq-title{margin:0 0 20px;padding-right:32px;font-size:19px;font-weight:700;line-height:1.45;letter-spacing:-.01em;color:#14213D}',
-    '.iq-title em{display:block;font-style:normal;font-family:"Black Han Sans","Noto Sans KR",sans-serif;font-size:25px;font-weight:400;color:#D62839;margin-top:4px;font-synthesis:none}',
+    '.iq-title em{display:block;font-style:normal;font-family:"Noto Sans KR",sans-serif;font-size:23px;font-weight:800;color:#D62839;margin-top:4px}',
     '@media (max-width:480px){.iq-title em{font-size:21px}}',
     '@media (max-width:360px){.iq-title{font-size:17px}.iq-title em{font-size:19px}}',
     '.iq-form{display:grid;gap:14px}',
