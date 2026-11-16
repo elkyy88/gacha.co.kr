@@ -391,6 +391,14 @@ th{background:var(--tint);color:var(--brand-ink)}
 }
 .swipe-hint{display:none}
 @media (max-width:640px){ .swipe-hint{display:flex} }
+
+/* 사업 영역: 제목 오른쪽에 창업 문의 버튼 */
+.section-head.head-row{max-width:none;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px}
+.section-head.head-row .head-txt{max-width:640px;min-width:0}
+.section-head.head-row .btn{flex:none;margin-bottom:6px}
+.m-br{display:none}
+@media (max-width:640px){ .m-br{display:inline} }
+@media (max-width:640px){ .section-head.head-row{flex-wrap:nowrap;gap:12px} .section-head.head-row .head-txt{flex:1} .section-head.head-row .btn{margin-bottom:4px;padding:9px 15px;font-size:14px} }
 </style>
 <style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -505,9 +513,12 @@ th{background:var(--tint);color:var(--brand-ink)}
 
   <section class="band tint" id="business">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">사업 영역</span>
-        <h2>세 가지 방식으로 함께합니다</h2>
+      <div class="section-head head-row">
+        <div class="head-txt">
+          <span class="eyebrow">사업 영역</span>
+          <h2>세 가지 방식으로<br class="m-br"> 함께합니다</h2>
+        </div>
+        <a class="btn btn-primary" href="business.html#contact">창업 문의</a>
       </div>
       <div class="areas m-swipe">
         <article class="area">
